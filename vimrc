@@ -1,24 +1,17 @@
 ""
 "" Thanks:
 ""   Gary Bernhardt  <destroyallsoftware.com>
-""   Drew Neil  <vimcasts.org>
-""   Tim Pope  <tbaggery.com>
-""   Janus  <github.com/carlhuda/janus>
-""
+""   Tim Pope        <tbaggery.com>
+""   Drew Neil       <vimcasts.org>
+""   Mislav Marohnić <http://mislav.uniqpath.com>
 
-set exrc                    " load vimrc from current directory
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+source ~/dotfiles/bundle.vim
+runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible
 set encoding=utf-8
-
-runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
 
 syntax enable
 set synmaxcol=800           " don't try to highlight long lines
@@ -251,33 +244,3 @@ function! AlternateForCurrentFile()
   return new_file
 endfunction
 nnoremap <leader>. :call OpenTestAlternate()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VUNDLE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Bundle 'gmarik/vundle'
-Bundle 'mileszs/ack'
-Bundle 'kien/ctrlp.vim'
-Bundle 'tomasr/molokai'
-Bundle 'scrooloose/nerdtree'
-Bundle 'godlygeek/tabular'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-haml'
-Bundle 'pangloss/vim-javascript'
-Bundle 'sleistner/vim-jshint'
-Bundle 'tpope/vim-liquid'
-Bundle 'nelstrom/vim-markdown-folding'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-repeat'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rvm'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-
-filetype plugin indent on
-
