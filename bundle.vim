@@ -11,7 +11,6 @@ filetype plugin indent on
 
 Bundle 'mileszs/ack'
 Bundle 'kien/ctrlp.vim'
-Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-bundler'
@@ -31,4 +30,8 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+
+" Color themes
+Bundle 'tomasr/molokai'
+Bundle 'altercation/vim-colors-solarized'
 

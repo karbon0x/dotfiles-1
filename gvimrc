@@ -2,7 +2,10 @@ set linespace=2
 set antialias "MacVim: smooth fonts."
 set encoding=utf-8
 set guifont=Source\ Code\ Pro:h18
-color monokai
+
+" Colors
+set background=dark
+color solarized
 
 " Don't beep
 set visualbell
