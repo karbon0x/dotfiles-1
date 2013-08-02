@@ -1,0 +1,14 @@
+[user]
+	name = jf019013
+	email = jordan.faust@cerner.com
+[core]
+	autocrlf = input
+	excludesfile = /Users/jf019013/.gitignore_global
+[init]
+	templatedir = ~/.git_template
+[push]
+	default = current
+[color]
+	ui = auto
+[merge]
+	tool = vimdiff
