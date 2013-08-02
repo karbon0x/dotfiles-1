@@ -37,3 +37,6 @@
 [submodule "vim/bundle/vim-jshint"]
 	path = vim/bundle/vim-jshint
 	url = https://github.com/sleistner/vim-jshint
+[submodule "vim/bundle/vim-liquid"]
+	path = vim/bundle/vim-liquid
+	url = https://github.com/tpope/vim-liquid
