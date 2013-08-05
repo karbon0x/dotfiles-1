@@ -37,6 +37,11 @@ set updatecount=0
 " Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"
 
+" Allow to revert changes after vim has closed
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
 "" Whitespace
 set nowrap                        " don't wrap lines
 set tabstop=2                     " a tab is two spaces
@@ -44,11 +49,13 @@ set shiftwidth=2                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
+
 " Joining lines
 if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j            " Delete comment char when joining commented lines
 endif
 set nojoinspaces                  " Use only 1 space after "." when joining lines, not 2
+
 " Indicator chars
 " set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
 set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
@@ -90,6 +97,7 @@ if has("autocmd")
 
   " In Makefiles, use real tabs, not tabs expanded to spaces
   au FileType make set noexpandtab
+  " In gitconfig, use real tabs, not tabs expanded to spaces
   au FileType gitconfig set noexpandtab
 
   " Make sure all markdown files have the correct filetype set and setup wrapping
@@ -142,38 +150,51 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " copy to clipboard clipboard
 map <leader>y "*y
+
+" Switch paste mode with F2 to quickly disable/enable indenting for paste.
+set pastetoggle=<F2>
+
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>
+
 " paste lines from unnamed register and fix indentation
 nmap <leader>p pV`]=
 nmap <leader>P PV`]=
+
 " don't use Ex mode, use Q for formatting
 map Q gq
+
 " clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
+
 " toggle the current fold
 :nnoremap <Space> za
+
 " In command-line mode, C-a jumps to beginning (to match C-e)
 cnoremap <C-a> <Home>
+
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
 nnoremap <leader>s :call FocusOnFile()<cr>
-nnoremap <leader>s <c-w>o <c-w>v <c-w>w :call OpenTestAlternate()<cr>
-" function! FocusOnFile()
-"   " tabnew %
-"   normal! v
-"   normal! l
-"   call OpenTestAlternate()
-"   normal! h
-" endfunction
+" nnoremap <leader>s <c-w>o <c-w>v <c-w>w :call OpenTestAlternate()<cr>
+nnoremap <leader>s :call FocusOnFile()<cr>
+function! FocusOnFile()
+  tabnew %
+  normal! v
+  normal! l
+  call OpenTestAlternate()
+  normal! h
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
