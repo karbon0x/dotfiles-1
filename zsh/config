@@ -1,0 +1,12 @@
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+ZSH_THEME='faust'
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(brew bundler gem git knife mvn node npm osx rails ruby rvm)
+
+source "$HOME/dotfiles/zsh/aliases" # Source before oh-my-zsh because LOL COMPUTERS (and bad shit happens otherwise)
+[[ -s "$HOME/.zshenv_private" ]] && source "$HOME/.zshenv_private" # Load privatly defined aliases and env if they exists
+source $ZSH/oh-my-zsh.sh
