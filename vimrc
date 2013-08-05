@@ -238,7 +238,6 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " Map toggling NERDTree to <C-n>
 map <C-n> :NERDTreeToggle<CR>
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -276,8 +275,9 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenTestAlternate()
   let new_file = AlternateForCurrentFile()
-  exec ':e ' . new_file
+  exec ':vsp ' . new_file
 endfunction
+
 function! AlternateForCurrentFile()
   let current_file = expand("%")
   let new_file = current_file
