@@ -3,7 +3,7 @@
 	email = jfaust47@gmail.com
 [core]
 	autocrlf = input
-	excludesfile = /Users/jf019013/.gitignore_global
+	excludesfile = /Users/jf019013/.global_gitignore
 [init]
 	templatedir = ~/.git_template
 [push]
