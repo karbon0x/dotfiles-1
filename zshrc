@@ -6,7 +6,7 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME='faust'
-# Example aliases
+
 # Aliases
 ## Typos
 alias gi='git '
@@ -15,6 +15,7 @@ alias pr='pry'
 alias sbul='subl '
 alias sbul.='subl .'
 alias subl.='subl .'
+
 ## Unix
 alias la='ls -alFGh'
 alias ll='ls -lFGh'
@@ -22,13 +23,23 @@ alias lr='ls -lFGhR'
 alias ls= 'ls -FG'
 alias grep='grep --color=auto -n '
 alias mkdir='mkdir -p '
+
 ## Ruby
 alias b='bundle '
 alias be='bundle exec '
 alias gemset='rvm gemset list | grep "=" | awk "{print \$2}"'
-#mysql
+alias gemi='gem install --no-ri --no-rdoc'
+alias gemu='gem uninstall'
+alias geml='gem list'
+alias gemc='gem cleanup'
+
+## Git
+alias glg='git log --decorate --graph -n 10 --date=relative --pretty="%C(yellow)%h%C(cyan)%d %Creset%s (%an - %ad)"'
+
+## MySQL
 alias mysql='mysql -u root -p'
-#redis
+
+## Redis
 alias start_redis='redis-server /usr/local/etc/redis.conf'
 
 source ~/.zshenv_private
