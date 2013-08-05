@@ -154,6 +154,10 @@ map <leader>y "*y
 " Switch paste mode with F2 to quickly disable/enable indenting for paste.
 set pastetoggle=<F2>
 
+" Jump to next/previous screen row in the editor instead of the line when wrapping.
+nmap j gj
+nmap k gk
+
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
