@@ -238,10 +238,30 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " Map toggling NERDTree to <C-n>
 map <C-n> :NERDTreeToggle<CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PRESERVE HISTORY
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Preserve history and cursor position while executing the given command
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KILL WHITE SPACE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-command! KillWhitespace :normal :%s/ *$//g<cr><c-o><cr>
+function! StripTrailingWhitespaces()
+  call Preserve("%s/\\s\\+$//e")
+endfunction
+nnoremap <silent> <F5> :call StripTrailingWhitespaces()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MARKDOWN WRAPPING
