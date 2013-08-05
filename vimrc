@@ -152,7 +152,7 @@ endif
 map <leader>y "*y
 
 " Switch paste mode with F2 to quickly disable/enable indenting for paste.
-set pastetoggle=<F2>
+set pastetoggle=<F13>
 
 " Jump to next/previous screen row in the editor instead of the line when wrapping.
 nmap j gj
