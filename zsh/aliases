@@ -26,6 +26,8 @@ alias gemc='gem cleanup'
 
 ## Git
 alias glg='git log --decorate --graph -n 10 --date=relative --pretty="%C(yellow)%h%C(cyan)%d %Creset%s (%an - %ad)"'
+alias git_cerner='git config --local user.name "jf019013" && git config --local user.email "jordan.faust@cerner.com"'
+alias git_me='git config --local --unset user.email && git config --local --unset user.name'
 
 ## MySQL
 alias mysql='mysql -u root -p'
