@@ -34,3 +34,6 @@ alias mysql='mysql -u root -p'
 
 ## Redis
 alias start_redis='redis-server /usr/local/etc/redis.conf'
+
+## Tmux
+alias tmux="TERM=screen-256color-bce tmux"

@@ -171,10 +171,10 @@ map <D-9> 9gt
 map <D-0> :tablast<CR>
 
 " Move around splits with <c-hjkl>
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-l> <c-w>l
 
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>

@@ -29,6 +29,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-surround'
+Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'tpope/vim-unimpaired'
 
 " Color themes
