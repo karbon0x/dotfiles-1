@@ -294,9 +294,21 @@ endfunction
 function! AlternateForCurrentFile()
   let current_file = expand("%")
   let new_file = current_file
-  let in_spec = match(current_file, '^spec/') != -1
+  if match(current_file, '\.rb$') != -1
+    let new_file = RubyAlternateForCurrentFile(current_file)
+  elseif match(current_file, '\.java$') != -1
+    let new_file = JavaAlternateForCurrentFile(current_file)
+  elseif match(current_file, '\.groovy$') != -1
+    let new_file = GroovyAlternateForCurrentFile(current_file)
+  endif
+  return new_file
+endfunction
+
+function! RubyAlternateForCurrentFile(current_file)
+  let new_file = a:current_file
+  let in_spec = match(a:current_file, '^spec/') != -1
   let going_to_spec = !in_spec
-  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
+  let in_app = match(a:current_file, '\<controllers\>') != -1 || match(a:current_file, '\<models\>') != -1 || match(a:current_file, '\<views\>') != -1 || match(a:current_file, '\<helpers\>') != -1 || match(a:current_file, '\<presenters\>') != -1
   if going_to_spec
     if in_app
       let new_file = substitute(new_file, '^app/', '', '')
@@ -312,4 +324,27 @@ function! AlternateForCurrentFile()
   endif
   return new_file
 endfunction
+
+function! JavaAlternateForCurrentFile(current_file)
+  let new_file = a:current_file
+  let in_test = match(a:current_file, 'Test\.java$') != -1
+  let going_to_test = !in_test
+  if going_to_test
+    let new_file = substitute(new_file, '\.java$', 'Test\.java', '')
+    let new_file = substitute(new_file, '\/main\/', '\/test\/', '')
+  endif
+  return new_file
+endfunction
+
+function! GroovyAlternateForCurrentFile(current_file)
+  let new_file = a:current_file
+  let in_test = match(a:current_file, 'Test\.groovy$') != -1
+  let going_to_test = !in_test
+  if going_to_test
+    let new_file = substitute(new_file, '\.groovy$', 'Test\.groovy', '')
+    let new_file = substitute(new_file, '\/main\/', '\/test\/', '')
+  endif
+  return new_file
+endfunction
+
 nnoremap <leader>. :call OpenTestAlternate()<cr>
