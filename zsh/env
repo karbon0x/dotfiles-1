@@ -7,7 +7,7 @@ export GROOVY_HOME=/usr/local/Cellar/groovy/2.0.5/libexec
 export PATH=$PATH:$GROOVY_HOME
 
 # Set MacVim as the default editor
-export EDITOR='mvim -f'
+export EDITOR='/usr/local/bin/vim'
 export BUNDLER_EDITOR=$EDITOR
 export GIT_EDITOR=$EDITOR
 
