@@ -67,3 +67,12 @@
 [submodule "vim/bundle/vundle"]
 	path = vim/bundle/vundle
 	url = https://github.com/gmarik/vundle
+[submodule "vim/syntax/groovy.vim"]
+	path = vim/syntax/groovy.vim
+	url = git@github.com:vim-scripts/groovy.vim.git
+[submodule "vim/ftplugin/java"]
+	path = vim/ftplugin/java
+	url = git@github.com:vim-scripts/java.vim.git
+[submodule "vim/ftplugin/groovy"]
+	path = vim/ftplugin/groovy
+	url = git@github.com:vim-scripts/groovy.vim--Ruley.git
