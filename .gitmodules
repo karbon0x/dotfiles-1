@@ -76,3 +76,6 @@
 [submodule "vim/ftplugin/groovy"]
 	path = vim/ftplugin/groovy
 	url = git@github.com:vim-scripts/groovy.vim--Ruley.git
+[submodule "vim/bundle/groovy.vim--Ruley"]
+	path = vim/bundle/groovy.vim--Ruley
+	url = http://github.com/vim-scripts/groovy.vim--Ruley
