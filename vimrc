@@ -58,8 +58,9 @@ set nojoinspaces                  " Use only 1 space after "." when joining line
 
 " Indicator chars
 " set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
-set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
-set showbreak=↪\
+set listchars=tab:>\ ,trail:*
+" ,extends:❯,precedes:❮
+" set showbreak=↪\
 
 "" Searching
 set hlsearch                      " highlight matches
@@ -92,8 +93,10 @@ let mapleader=","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
   " Avoid showing trailing whitespace when in insert mode
-  au InsertEnter * :set listchars-=trail:•
-  au InsertLeave * :set listchars+=trail:•
+  " au InsertEnter * :set listchars-=trail:•
+  " au InsertLeave * :set listchars+=trail:•
+  au InsertEnter * :set listchars-=trail:*
+  au InsertLeave * :set listchars+=trail:*
 
   " In Makefiles, use real tabs, not tabs expanded to spaces
   au FileType make set noexpandtab
@@ -103,11 +106,19 @@ if has("autocmd")
   " Make sure all markdown files have the correct filetype set and setup wrapping
   au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
 
+  " Make groovy play nice. And :( groovy
+  " Set 'formatoptions' to break comment lines but not other lines,
+  " and insert the comment leader when hitting <CR> or using "o".
+  au BufRead,BufNewFile *.groovy setlocal formatoptions-=t formatoptions+=croql
+  " Set 'comments' to format dashed lists in comments. Behaves just like C.
+  au BufRead,BufNewFile *.groovy setlocal comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/ commentstring=//%s
+  au BufRead,BufNewFile *.groovy setlocal smartindent autoindent
+
   " Treat JSON files like JavaScript
-  au BufNewFile,BufRead *.json set ft=javascript
+  au BufRead,BufNewFile *.json set ft=javascript
 
   " https://github.com/sstephenson/bats
-  au BufNewFile,BufRead *.bats set ft=sh
+  au BufRead,BufNewFile *.bats set ft=sh
 
   " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
   au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
@@ -118,7 +129,7 @@ if has("autocmd")
     \| exe "normal! g`\"" | endif
 
   " mark Jekyll YAML frontmatter as comment
-  au BufNewFile,BufRead *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+  au BufRead,BufNewFile *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
 
   " magic markers: enable using `H/S/J/C to jump back to
   " last HTML, stylesheet, JS or Ruby code buffer
@@ -152,6 +163,10 @@ endif
 " copy to clipboard clipboard
 map <leader>y "*y
 
+" paste lines from unnamed register and fix indentation
+nmap <leader>p pV`]=
+nmap <leader>P PV`]=
+
 " Switch paste mode with F2 to quickly disable/enable indenting for paste.
 set pastetoggle=<F13>
 
@@ -174,18 +189,14 @@ map <D-0> :tablast<CR>
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>
 
-" paste lines from unnamed register and fix indentation
-nmap <leader>p pV`]=
-nmap <leader>P PV`]=
-
 " don't use Ex mode, use Q for formatting
 map Q gq
 
 " clear the search buffer when hitting return
-:nnoremap <CR> :nohlsearch<cr>
+nnoremap <CR> :nohlsearch<cr>
 
 " toggle the current fold
-:nnoremap <Space> za
+nnoremap <Space> za
 
 " In command-line mode, C-a jumps to beginning (to match C-e)
 cnoremap <C-a> <Home>

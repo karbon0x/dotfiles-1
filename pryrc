@@ -34,3 +34,5 @@ end
 def paste
   `pbpaste`
 end
+
+# vim:ft=ruby:
