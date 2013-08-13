@@ -109,10 +109,11 @@ if has("autocmd")
   " Make groovy play nice. And :( groovy
   " Set 'formatoptions' to break comment lines but not other lines,
   " and insert the comment leader when hitting <CR> or using "o".
-  au BufRead,BufNewFile *.groovy setlocal formatoptions-=t formatoptions+=croql
   " Set 'comments' to format dashed lists in comments. Behaves just like C.
-  au BufRead,BufNewFile *.groovy setlocal comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/ commentstring=//%s
-  au BufRead,BufNewFile *.groovy setlocal smartindent autoindent
+  au FileType groovy setlocal formatoptions-=t formatoptions+=croql
+                            \ smartindent autoindent
+                            \ comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/ 
+                            \ commentstring=//%s
 
   " Treat JSON files like JavaScript
   au BufRead,BufNewFile *.json set ft=javascript
