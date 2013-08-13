@@ -57,10 +57,7 @@ endif
 set nojoinspaces                  " Use only 1 space after "." when joining lines, not 2
 
 " Indicator chars
-" set listchars=tab:▸\ ,trail:•,extends:❯,precedes:❮
 set listchars=tab:>\ ,trail:*
-" ,extends:❯,precedes:❮
-" set showbreak=↪\
 
 "" Searching
 set hlsearch                      " highlight matches
@@ -92,52 +89,68 @@ let mapleader=","
 " CUSTOM AUTOCMDS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
-  " Avoid showing trailing whitespace when in insert mode
-  " au InsertEnter * :set listchars-=trail:•
-  " au InsertLeave * :set listchars+=trail:•
-  au InsertEnter * :set listchars-=trail:*
-  au InsertLeave * :set listchars+=trail:*
+  " Autocmd group responsible for file type specific autocmd's
+  augroup file_types
+    " Clear out the file_types autocommand group
+    autocmd!
 
-  " In Makefiles, use real tabs, not tabs expanded to spaces
-  au FileType make set noexpandtab
-  " In gitconfig, use real tabs, not tabs expanded to spaces
-  au FileType gitconfig set noexpandtab
+    " In Makefiles, use real tabs, not tabs expanded to spaces
+    autocmd FileType make setlocal noexpandtab
 
-  " Make sure all markdown files have the correct filetype set and setup wrapping
-  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
+    " In gitconfig, use real tabs, not tabs expanded to spaces
+    autocmd FileType gitconfig setlocal noexpandtab
 
-  " Make groovy play nice. And :( groovy
-  " Set 'formatoptions' to break comment lines but not other lines,
-  " and insert the comment leader when hitting <CR> or using "o".
-  " Set 'comments' to format dashed lists in comments. Behaves just like C.
-  au FileType groovy setlocal formatoptions-=t formatoptions+=croql
-                            \ smartindent autoindent
-                            \ comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/ 
-                            \ commentstring=//%s
+    " Make groovy play nice. And :( groovy
+    " Set 'formatoptions' to break comment lines but not other lines,
+    " and insert the comment leader when hitting <CR> or using "o".
+    " Set 'comments' to format dashed lists in comments. Behaves just like C.
+    autocmd FileType groovy setlocal formatoptions-=t formatoptions+=croql
+                              \ smartindent autoindent
+                              \ comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/
+                              \ commentstring=//%s
 
-  " Treat JSON files like JavaScript
-  au BufRead,BufNewFile *.json set ft=javascript
+    " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+    autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+  augroup END
 
-  " https://github.com/sstephenson/bats
-  au BufRead,BufNewFile *.bats set ft=sh
+  " Autocmd group responsible for buffer opening and closing specific
+  " autocmd's
+  augroup event_group
+    " Clear out the event_group autocommand group
+    autocmd!
 
-  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+    " Make sure all markdown files have the correct filetype set and setup wrapping
+    autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
 
-  " Remember last location in file, but not for commit messages.
-  " see :help last-position-jump
-  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
+    " Treat JSON files like JavaScript
+    autocmd BufRead,BufNewFile *.json set ft=javascript
 
-  " mark Jekyll YAML frontmatter as comment
-  au BufRead,BufNewFile *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+    " https://github.com/sstephenson/bats
+    autocmd BufRead,BufNewFile *.bats set ft=sh
 
-  " magic markers: enable using `H/S/J/C to jump back to
-  " last HTML, stylesheet, JS or Ruby code buffer
-  au BufLeave *.{erb,html}      exe "normal! mH"
-  au BufLeave *.{css,scss,sass} exe "normal! mS"
-  au BufLeave *.{js,coffee}     exe "normal! mJ"
-  au BufLeave *.{rb}            exe "normal! mC"
+    " Remember last location in file, but not for commit messages.
+    " see :help last-position-jump
+    autocmd BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+      \| exe "normal! g`\"" | endif
+
+    " mark Jekyll YAML frontmatter as comment
+    autocmd BufRead,BufNewFile *.{md,markdown,html,xml} sy match Comment /\%^---\_.\{-}---$/
+
+    " magic markers: enable using `H/S/J/C to jump back to
+    " last HTML, stylesheet, JS or Ruby code buffer
+    autocmd BufLeave *.{erb,html}      exe "normal! mH"
+    autocmd BufLeave *.{css,scss,sass} exe "normal! mS"
+    autocmd BufLeave *.{js,coffee}     exe "normal! mJ"
+    autocmd BufLeave *.{rb}            exe "normal! mC"
+  augroup END
+
+  " Autcomd group responsible for leaving and entering insert mode specific
+  " autocmd's
+  augroup insert_mode_group
+    " Avoid showing trailing whitespace when in insert mode
+    autocmd InsertEnter * :set listchars-=trail:*
+    autocmd InsertLeave * :set listchars+=trail:*
+  augroup END
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -159,39 +172,45 @@ if has("statusline") && !&cp
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MISC KEY MAPS
+" CUSTOM KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open vimrc for editing
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Load new changes made in vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
 " copy to clipboard clipboard
-map <leader>y "*y
+noremap <leader>y "*y
 
 " paste lines from unnamed register and fix indentation
-nmap <leader>p pV`]=
-nmap <leader>P PV`]=
+nnoremap <leader>p pV`]=
+nnoremap <leader>P PV`]=
 
 " Switch paste mode with F2 to quickly disable/enable indenting for paste.
 set pastetoggle=<F13>
 
 " Jump to next/previous screen row in the editor instead of the line when wrapping.
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 " Use Cmd + N to change tabs
-map <D-1> 1gt
-map <D-2> 2gt
-map <D-3> 3gt
-map <D-4> 4gt
-map <D-5> 5gt
-map <D-6> 6gt
-map <D-7> 7gt
-map <D-8> 8gt
-map <D-9> 9gt
-map <D-0> :tablast<CR>
+noremap <D-1> 1gt
+noremap <D-2> 2gt
+noremap <D-3> 3gt
+noremap <D-4> 4gt
+noremap <D-5> 5gt
+noremap <D-6> 6gt
+noremap <D-7> 7gt
+noremap <D-8> 8gt
+noremap <D-9> 9gt
+noremap <D-0> :tablast<CR>
 
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>
 
 " don't use Ex mode, use Q for formatting
-map Q gq
+noremap Q gq
 
 " clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<cr>
@@ -209,23 +228,31 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
 nnoremap <leader>s :call FocusOnFile()<cr>
-" nnoremap <leader>s <c-w>o <c-w>v <c-w>w :call OpenTestAlternate()<cr>
-nnoremap <leader>s :call FocusOnFile()<cr>
-function! FocusOnFile()
-  tabnew %
-  normal! v
-  normal! l
-  call OpenTestAlternate()
-  normal! h
-endfunction
+
+" Open the current file's test alternate in a vertical split.
+nnoremap <leader>. :call OpenTestAlternate()<cr>
+
+" Rename the current buffers file and prompt for the new file name.
+nnoremap <leader>n :call RenameFile()<cr>
+
+" Strip the whitespace from the current buffer.
+nnoremap <silent> <F5> :call StripTrailingWhitespaces()<CR>
+
+" Map toggling NERDTree to <C-n>
+noremap <C-n> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Left> <Nop>
-map <Right> <Nop>
-map <Up> <Nop>
-map <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" HITTING ESC IS UNACCEPTABLE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <esc> <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP KEY MAPS AND CONFIGURATION
@@ -240,10 +267,8 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDTREE KEY MAPS AND CONFIGURATION
+" NERDTREE CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map toggling NERDTree to <C-n>
-map <C-n> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TURBUX CONFIGURATIONS
@@ -271,14 +296,24 @@ endfunction
 function! StripTrailingWhitespaces()
   call Preserve("%s/\\s\\+$//e")
 endfunction
-nnoremap <silent> <F5> :call StripTrailingWhitespaces()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MARKDOWN WRAPPING
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function s:setupWrapping()
+function! s:setupWrapping()
   set wrap
   set wrapmargin=2
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FOCUS ON CURRENT FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! FocusOnFile()
+  tabnew %
+  normal! v
+  normal! l
+  call OpenTestAlternate()
+  normal! h
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -293,7 +328,6 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <leader>n :call RenameFile()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
@@ -358,5 +392,3 @@ function! GroovyAlternateForCurrentFile(current_file)
   endif
   return new_file
 endfunction
-
-nnoremap <leader>. :call OpenTestAlternate()<cr>
