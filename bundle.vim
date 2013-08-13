@@ -40,5 +40,4 @@ Bundle 'altercation/vim-colors-solarized'
 
 " Vim scripts
 Bundle 'vim-scripts/groovy.vim'
-Bundle 'vim-scripts/groovy.vim--Ruley'
 Bundle 'vim-scripts/java.vim'
