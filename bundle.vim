@@ -11,6 +11,7 @@ filetype plugin indent on
 
 Bundle 'mileszs/ack'
 Bundle 'kien/ctrlp.vim'
+Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-bundler'
