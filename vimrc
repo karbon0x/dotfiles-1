@@ -3,7 +3,8 @@
 ""   Gary Bernhardt  <destroyallsoftware.com>
 ""   Tim Pope        <tbaggery.com>
 ""   Drew Neil       <vimcasts.org>
-""   Mislav Marohnić <http://mislav.uniqpath.com>
+""   Mislav Marohnić <mislav.uniqpath.com>
+""   Steve Losh      <learnvimscriptthehardway.stevelosh.com>
 
 source ~/dotfiles/bundle.vim
 runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
@@ -187,8 +188,23 @@ noremap <leader>y "*y
 nnoremap <leader>p pV`]=
 nnoremap <leader>P PV`]=
 
-" Switch paste mode with F2 to quickly disable/enable indenting for paste.
-set pastetoggle=<F13>
+" Operator pending mapping that effects the content of the surround
+" parentheses. Think of this as 'parentheses'
+" Example dp => 'delete parameters'
+onoremap p i(
+
+" Operator pending mapping that effects the content of the next set of
+" surrounding parentheses. Think of this as 'inside next parentheses'.
+" Example cin( => 'change inside next parentheses'
+onoremap in( :<c-u>normal! f(vi(<cr>
+
+" Operator pending mapping that effects the content of the last set of
+" surrounding parentheses. Think of this as 'inside last parentheses'.
+" Example cin( => 'change inside last parentheses'
+onoremap il( :<c-u>normal! F)vi(<cr>
+
+" Switch paste mode with F16 to quickly disable/enable indenting for paste.
+set pastetoggle=<F16>
 
 " Jump to next/previous screen row in the editor instead of the line when wrapping.
 nnoremap j gj
@@ -236,7 +252,7 @@ nnoremap <leader>. :call OpenTestAlternate()<cr>
 nnoremap <leader>n :call RenameFile()<cr>
 
 " Strip the whitespace from the current buffer.
-nnoremap <silent> <F5> :call StripTrailingWhitespaces()<CR>
+map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 
 " Map toggling NERDTree to <C-n>
 noremap <C-n> :NERDTreeToggle<CR>
@@ -252,7 +268,7 @@ noremap <Down> <Nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HITTING ESC IS UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <esc> <Nop>
+inoremap <esc> <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP KEY MAPS AND CONFIGURATION
