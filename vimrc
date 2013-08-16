@@ -166,12 +166,23 @@ color solarized
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("statusline") && !&cp
   set laststatus=2              " always show the status bar
-  set statusline=%f\ %m\ %r     " filename, modified, readonly
-  set statusline+=%{fugitive#statusline()}
-  set statusline+=\ %l/%L[%p%%] " current line/total lines
-  set statusline+=\ %v[0x%B]    " current column [hex char]
+  " set statusline=%f\ %m\ %r     " filename, modified, readonly
+  " set statusline+=%{fugitive#statusline()}
+  " set statusline+=\ %l/%L[%p%%] " current line/total lines
+  " set statusline+=\ %v[0x%B]    " current column [hex char]
 endif
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIM-STATUSLINE CONFIGURATIONS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_detect_whitespace=1 "icon and message (default)
+let g:airline_exclude_preview = 0
+let g:airline_theme='solarized'
+
+let g:airline_enable_branch = 1
+let g:airline_branch_empty_message = ''
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -184,9 +195,12 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " copy to clipboard clipboard
 noremap <leader>y "*y
 
+" paste from clipboard
+noremap <leader>p "*P
+
 " paste lines from unnamed register and fix indentation
-nnoremap <leader>p pV`]=
-nnoremap <leader>P PV`]=
+" nnoremap <leader>p pV`]=
+" nnoremap <leader>P PV`]=
 
 " Operator pending mapping that effects the content of the surround
 " parentheses. Think of this as 'parentheses'
@@ -260,15 +274,27 @@ noremap <C-n> :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-noremap <Up> <Nop>
-noremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ARROW KEYS ARE UNACCEPTABLE
+""""""""""""""""""""""""""""OCOCOOAOBaiOCD""""""""""""""""""""""""""""""""""""""""""""""""""
+" imap ^[OA <C-c>ki
+" imap ^[OB <C-c>ji
+" imap ^[OC <C-c>li
+" imap ^[OD <C-c>hi
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HITTING ESC IS UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-inoremap <esc> <Nop>
+" inoremap <esc> <Nop>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" HITTING DELETE IS UNACCEPTABLE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+inoremap <Del> <Nop>
+inoremap <BS>  <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP KEY MAPS AND CONFIGURATION
