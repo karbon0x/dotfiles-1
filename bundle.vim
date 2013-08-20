@@ -11,7 +11,7 @@ filetype plugin indent on
 
 Bundle 'mileszs/ack'
 Bundle 'kien/ctrlp.vim'
-Bundle 'othree/html5.vim'
+" Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'bling/vim-airline'
@@ -29,7 +29,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rvm'
+" Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-surround'
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'benmills/vimux'
@@ -42,4 +42,4 @@ Bundle 'altercation/vim-colors-solarized'
 
 " Vim scripts
 Bundle 'vim-scripts/groovy.vim'
-Bundle 'vim-scripts/java.vim'
+" Bundle 'vim-scripts/java.vim'
