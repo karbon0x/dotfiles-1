@@ -129,6 +129,9 @@ if has("autocmd")
     " https://github.com/sstephenson/bats
     autocmd BufRead,BufNewFile *.bats set ft=sh
 
+    " Set the filetype to rust when opening a rust file
+    autocmd BufRead,BufNewFile *.rs set ft=rust
+
     " Remember last location in file, but not for commit messages.
     " see :help last-position-jump
     autocmd BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
