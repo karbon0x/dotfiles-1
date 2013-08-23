@@ -418,6 +418,9 @@ function! JavaAlternateForCurrentFile(current_file)
   if going_to_test
     let new_file = substitute(new_file, '\.java$', 'Test\.java', '')
     let new_file = substitute(new_file, '\/main\/', '\/test\/', '')
+  else
+    let new_file = substitute(new_file, 'Test\.java$', '\.java', '')
+    let new_file = substitute(new_file, '\/test\/', '\/main\/', '')
   endif
   return new_file
 endfunction
@@ -429,6 +432,9 @@ function! GroovyAlternateForCurrentFile(current_file)
   if going_to_test
     let new_file = substitute(new_file, '\.groovy$', 'Test\.groovy', '')
     let new_file = substitute(new_file, '\/main\/', '\/test\/', '')
+  else
+    let new_file = substitute(new_file, 'Test\.groovy$', '\.groovy', '')
+    let new_file = substitute(new_file, '\/test\/', '\/main\/', '')
   endif
   return new_file
 endfunction
