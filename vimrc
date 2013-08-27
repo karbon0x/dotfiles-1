@@ -110,8 +110,14 @@ if has("autocmd")
                               \ comments& comments^=sO:*\ -,mO:*\ \ ,exO:*/
                               \ commentstring=//%s
 
+    " Setup dispatch to default to running the current test file
+    autocmd FileType groovy let b:dispatch = 'mvn -Dtest=% test'
+
     " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
     autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+
+    " Setup dispatch to default to running the current test file
+    autocmd FileType ruby let b:dispatch = 'rspec %'
   augroup END
 
   " Autocmd group responsible for buffer opening and closing specific
