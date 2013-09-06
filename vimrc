@@ -111,7 +111,8 @@ if has("autocmd")
                               \ commentstring=//%s
 
     " Setup dispatch to default to running the current test file
-    autocmd FileType groovy let b:dispatch = 'mvn -Dtest=% test'
+    autocmd FileType groovy let b:dispatch = 'mvn test -Dtest=' . expand("%:t:r")
+    autocmd FileType java let b:dispatch = 'mvn test -Dtest=' . expand("%:t:r")
 
     " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
     autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
@@ -201,7 +202,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Load new changes made in vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-" copy to clipboard clipboard
+" copy to clipboard
 noremap <leader>y "*y
 
 " paste from clipboard
@@ -271,6 +272,9 @@ nnoremap <leader>s :call FocusOnFile()<cr>
 " Open the current file's test alternate in a vertical split.
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 
+" Run dispatch
+nnoremap <leader>t :Dispatch<CR>  
+
 " Rename the current buffers file and prompt for the new file name.
 nnoremap <leader>n :call RenameFile()<cr>
 
@@ -291,7 +295,7 @@ nnoremap <Down> <Nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HITTING ESC IS UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-inoremap <esc> <Nop>
+inoremap <C-[> <esc>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HITTING DELETE IS UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
