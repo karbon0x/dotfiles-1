@@ -79,3 +79,21 @@
 [submodule "vim/bundle/groovy.vim--Ruley"]
 	path = vim/bundle/groovy.vim--Ruley
 	url = http://github.com/vim-scripts/groovy.vim--Ruley
+[submodule "vim/bundle/groovy.vim"]
+	path = vim/bundle/groovy.vim
+	url = https://github.com/vim-scripts/groovy.vim
+[submodule "vim/bundle/rust.vim"]
+	path = vim/bundle/rust.vim
+	url = https://github.com/wting/rust.vim
+[submodule "vim/bundle/vim-airline"]
+	path = vim/bundle/vim-airline
+	url = https://github.com/bling/vim-airline
+[submodule "vim/bundle/vim-colors-solarized"]
+	path = vim/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
+[submodule "vim/bundle/vim-dispatch"]
+	path = vim/bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch
+[submodule "vim/bundle/vim-tmux-navigator"]
+	path = vim/bundle/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator

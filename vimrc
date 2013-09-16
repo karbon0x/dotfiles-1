@@ -40,6 +40,7 @@ set backupskip=/tmp/*,/private/tmp/*"
 
 " Allow to revert changes after vim has closed
 set undodir=$HOME/.vim/undo
+set undofile
 set undolevels=1000
 set undoreload=10000
 
@@ -273,7 +274,7 @@ nnoremap <leader>s :call FocusOnFile()<cr>
 nnoremap <leader>. :call OpenTestAlternate()<cr>
 
 " Run dispatch
-nnoremap <leader>t :Dispatch<CR>  
+nnoremap <leader>t :Dispatch<CR>
 
 " Rename the current buffers file and prompt for the new file name.
 nnoremap <leader>n :call RenameFile()<cr>
