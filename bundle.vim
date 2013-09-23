@@ -9,11 +9,12 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 filetype plugin indent on
 
-Bundle 'mileszs/ack'
+Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
 " Bundle 'othree/html5.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
+Bundle 'vim-scripts/taglist.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'

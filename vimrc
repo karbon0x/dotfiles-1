@@ -289,6 +289,8 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 " Map toggling NERDTree to <C-n>
 noremap <C-n> :NERDTreeToggle<CR>
 
+" Map toggling Taglist to <C-l>
+noremap <C-l> :TlistToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -325,8 +327,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let NERDTreeShowHidden = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TURBUX CONFIGURATIONS
+" TAGLIST CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let Tlist_Show_One_File=1            " Only show the taglist of the current buffer
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
