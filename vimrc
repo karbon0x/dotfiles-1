@@ -138,6 +138,9 @@ if has("autocmd")
     " Treat JSON files like JavaScript
     autocmd BufRead,BufNewFile *.json set ft=javascript
 
+    " Handle rails asset pipeline wierdness for less
+    autocmd BufRead,BufNewFile *.less set ft=less
+
     " https://github.com/sstephenson/bats
     autocmd BufRead,BufNewFile *.bats set ft=sh
 
@@ -290,7 +293,7 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 noremap <C-n> :NERDTreeToggle<CR>
 
 " Map toggling Taglist to <C-l>
-noremap <C-l> :TlistToggle<CR>
+noremap <leader>l :TlistToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
