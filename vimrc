@@ -183,10 +183,6 @@ color solarized
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("statusline") && !&cp
   set laststatus=2              " always show the status bar
-  " set statusline=%f\ %m\ %r     " filename, modified, readonly
-  " set statusline+=%{fugitive#statusline()}
-  " set statusline+=\ %l/%L[%p%%] " current line/total lines
-  " set statusline+=\ %v[0x%B]    " current column [hex char]
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -213,12 +209,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " copy to clipboard
 noremap <leader>y "*y
 
-" paste from clipboard
-noremap <leader>p "*P
-
 " paste lines from unnamed register and fix indentation
-" nnoremap <leader>p pV`]=
-" nnoremap <leader>P PV`]=
+nnoremap <leader>p pV`]=
+nnoremap <leader>P PV`]=
 
 " Operator pending mapping that effects the content of the surround
 " parentheses. Think of this as 'parentheses'
@@ -332,7 +325,8 @@ let NERDTreeShowHidden = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TAGLIST CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Show_One_File=1            " Only show the taglist of the current buffer
+let Tlist_Show_One_File=1        " Only show the taglist of the current buffer
+let Tlist_Use_Right_Window=1     " Place the taglist window on the right side.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
