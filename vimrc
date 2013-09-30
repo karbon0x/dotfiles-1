@@ -286,7 +286,7 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 noremap <C-n> :NERDTreeToggle<CR>
 
 " Map toggling Taglist to <C-l>
-noremap <leader>l :TlistToggle<CR>
+noremap <leader>l :TagbarToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -323,10 +323,10 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let NERDTreeShowHidden = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TAGLIST CONFIGURATIONS
+" TAGBAR CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Show_One_File=1        " Only show the taglist of the current buffer
-let Tlist_Use_Right_Window=1     " Place the taglist window on the right side.
+" let Tlist_Show_One_File=1        " Only show the taglist of the current buffer
+" let Tlist_Use_Right_Window=1     " Place the taglist window on the right side.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
