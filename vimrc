@@ -325,8 +325,17 @@ let NERDTreeShowHidden = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TAGBAR CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let Tlist_Show_One_File=1        " Only show the taglist of the current buffer
-" let Tlist_Use_Right_Window=1     " Place the taglist window on the right side.
+" Configure TagBar to work with groovy
+let g:tagbar_type_groovy = {
+  \ 'ctagstype' : 'groovy',
+  \ 'kinds'     : [
+    \ 'p:package',
+    \ 'c:class',
+    \ 'i:interface',
+    \ 'f:function',
+    \ 'v:variables',
+  \ ]
+\ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
