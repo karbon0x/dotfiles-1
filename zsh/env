@@ -5,6 +5,7 @@ export PATH=/usr/local/bin:$PATH:$HOME/.rvm/bin
 # Add Groovy to the path :(
 export GROOVY_HOME=/usr/local/Cellar/groovy/2.0.5/libexec
 export PATH=$PATH:$GROOVY_HOME
+export NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
 
 # Set MacVim as the default editor
 export EDITOR='/usr/local/bin/vim'
