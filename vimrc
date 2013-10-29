@@ -38,12 +38,6 @@ set updatecount=0
 " Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"
 
-" Allow to revert changes after vim has closed
-set undodir=$HOME/.vim/undo
-set undofile
-set undolevels=1000
-set undoreload=10000
-
 "" Whitespace
 set nowrap                        " don't wrap lines
 set tabstop=2                     " a tab is two spaces
@@ -166,6 +160,9 @@ if has("autocmd")
   " Autcomd group responsible for leaving and entering insert mode specific
   " autocmd's
   augroup insert_mode_group
+    " Clear out the insert_mode_group autocommand group
+    autocmd!
+
     " Avoid showing trailing whitespace when in insert mode
     autocmd InsertEnter * :set listchars-=trail:*
     autocmd InsertLeave * :set listchars+=trail:*
@@ -193,7 +190,6 @@ let g:airline_detect_paste=1
 let g:airline_detect_whitespace=1 "icon and message (default)
 let g:airline_exclude_preview = 0
 let g:airline_theme='solarized'
-
 let g:airline_enable_branch = 1
 let g:airline_branch_empty_message = ''
 
@@ -225,7 +221,7 @@ onoremap in( :<c-u>normal! f(vi(<cr>
 
 " Operator pending mapping that effects the content of the last set of
 " surrounding parentheses. Think of this as 'inside last parentheses'.
-" Example cin( => 'change inside last parentheses'
+" Example cil( => 'change inside last parentheses'
 onoremap il( :<c-u>normal! F)vi(<cr>
 
 " Switch paste mode with F16 to quickly disable/enable indenting for paste.
@@ -287,16 +283,6 @@ noremap <C-n> :NERDTreeToggle<CR>
 
 " Map toggling Taglist to <C-l>
 noremap <leader>l :TagbarToggle<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" HITTING ESC IS UNACCEPTABLE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-inoremap <C-[> <esc>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" HITTING DELETE IS UNACCEPTABLE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-inoremap <Del> <Nop>
-inoremap <BS>  <Nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRLP KEY MAPS AND CONFIGURATION

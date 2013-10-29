@@ -10,12 +10,13 @@ Bundle 'gmarik/vundle'
 filetype plugin indent on
 
 Bundle 'mileszs/ack.vim'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/ctrlp.vim'
-" Bundle 'othree/html5.vim'
+Bundle 'vim-scripts/groovy.vim'
+Bundle 'tomasr/molokai'
 Bundle 'scrooloose/nerdtree'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
-" Bundle 'vim-scripts/taglist.vim'
 Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
@@ -34,17 +35,6 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'wting/rust.vim'
-" Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-surround'
 Bundle 'christoomey/vim-tmux-navigator'
-" Bundle 'benmills/vimux'
-" Bundle 'jgdavey/vim-turbux'
 Bundle 'tpope/vim-unimpaired'
-
-" Color themes
-Bundle 'tomasr/molokai'
-Bundle 'altercation/vim-colors-solarized'
-
-" Vim scripts
-Bundle 'vim-scripts/groovy.vim'
-" Bundle 'vim-scripts/java.vim'
