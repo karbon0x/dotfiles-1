@@ -10,3 +10,5 @@ plugins=(brew bundler gem git knife mvn node npm osx rails ruby rvm)
 source "$HOME/dotfiles/zsh/aliases" # Source before oh-my-zsh because LOL COMPUTERS (and bad shit happens otherwise)
 [[ -a "$HOME/.zshenv_private" ]] && source "$HOME/.zshenv_private" # Load privatly defined aliases and env if they exists
 source $ZSH/oh-my-zsh.sh
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

@@ -1,0 +1,25 @@
+return_code() {
+  local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+  return return_code
+}
+
+current_dir() {
+  local current_dir='%{$terminfo[bold]$fg[blue]%} %~%{$reset_color%}'
+  return current_dir
+}
+
+rvm_ruvy() {
+  local rvm_ruby=''
+  rvm_ruby='%{$fg[red]%}‹$(rvm-prompt i v g)›%{$reset_color%}'
+  return rvm_ruby
+}
+
+# local git_branch='$(git_prompt_info)%{$reset_color%}'
+
+# PROMPT="${rvm_ruby} ${current_dir} ${git_branch}
+PROMPT="${rvm_ruby} ${current_dir}
+%B$%b "
+RPS1="${return_code}"
+
+source "$HOME/dotfiles/bash/aliases"
+
