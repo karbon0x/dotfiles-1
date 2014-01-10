@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Aliases
 ## Typos
 alias gi='git '
@@ -18,7 +20,6 @@ alias mkdir='mkdir -p '
 ## Ruby
 alias b='bundle '
 alias be='bundle exec '
-alias gemset='rvm gemset list | grep "=" | awk "{print \$2}"'
 alias gemi='gem install --no-ri --no-rdoc'
 alias gemu='gem uninstall'
 alias geml='gem list'

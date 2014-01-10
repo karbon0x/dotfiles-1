@@ -1,7 +1,7 @@
 # Put .bundle/bin as the first path to lookup executables, to work with bundler binstubs
 # Put /usr/local/bin before /usr/bin to avoid issues with lion installation (mainly git now)
 # Add RVM to PATH for scripting
-export PATH=/usr/local/bin:$PATH:$HOME/.rvm/bin
+export PATH=/usr/local/bin
 # Add Groovy to the path :(
 export GROOVY_HOME=/usr/local/Cellar/groovy/2.0.5/libexec
 export PATH=$PATH:$GROOVY_HOME

@@ -118,6 +118,10 @@ if has("autocmd")
 
     " Setup dispatch to default to running the current test file
     autocmd FileType ruby let b:dispatch = 'rspec %'
+
+    " Setup tab spacing for Rust
+    autocmd FileType rust setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+    autocmd FileType rust let b:dispatch = 'rustc %'
   augroup END
 
   " Autocmd group responsible for buffer opening and closing specific
@@ -172,7 +176,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark
+set background=light
 color solarized
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,23 +196,11 @@ let g:airline_exclude_preview = 0
 let g:airline_theme='solarized'
 let g:airline_enable_branch = 1
 let g:airline_branch_empty_message = ''
+let g:airline_section_x = ''
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open vimrc for editing
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-
-" Load new changes made in vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" copy to clipboard
-noremap <leader>y "*y
-
-" paste lines from unnamed register and fix indentation
-nnoremap <leader>p pV`]=
-nnoremap <leader>P PV`]=
-
 " Operator pending mapping that effects the content of the surround
 " parentheses. Think of this as 'parentheses'
 " Example dp => 'delete parameters'
@@ -217,12 +209,12 @@ onoremap p i(
 " Operator pending mapping that effects the content of the next set of
 " surrounding parentheses. Think of this as 'inside next parentheses'.
 " Example cin( => 'change inside next parentheses'
-onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap inp :<c-u>normal! f(vi(<cr>
 
 " Operator pending mapping that effects the content of the last set of
 " surrounding parentheses. Think of this as 'inside last parentheses'.
 " Example cil( => 'change inside last parentheses'
-onoremap il( :<c-u>normal! F)vi(<cr>
+onoremap ilp :<c-u>normal! F)vi(<cr>
 
 " Switch paste mode with F16 to quickly disable/enable indenting for paste.
 set pastetoggle=<F16>
@@ -243,9 +235,6 @@ noremap <D-8> 8gt
 noremap <D-9> 9gt
 noremap <D-0> :tablast<CR>
 
-" toggle between last open buffers
-nnoremap <leader><leader> <c-^>
-
 " don't use Ex mode, use Q for formatting
 noremap Q gq
 
@@ -258,9 +247,28 @@ nnoremap <Space> za
 " In command-line mode, C-a jumps to beginning (to match C-e)
 cnoremap <C-a> <Home>
 
+" Map toggling NERDTree to <C-n>
+noremap <C-n> :NERDTreeToggle<CR>
+
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+" toggle between last open buffers
+nnoremap <leader><leader> <c-^>
+
+" Open vimrc for editing
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Load new changes made in vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" copy to clipboard
+noremap <leader>y "+y
+
+" paste lines from unnamed register and fix indentation
+nnoremap <leader>p pV`]=
+nnoremap <leader>P PV`]=
 
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
@@ -278,8 +286,6 @@ nnoremap <leader>n :call RenameFile()<cr>
 " Strip the whitespace from the current buffer.
 map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 
-" Map toggling NERDTree to <C-n>
-noremap <C-n> :NERDTreeToggle<CR>
 
 " Map toggling Taglist to <C-l>
 noremap <leader>l :TagbarToggle<CR>

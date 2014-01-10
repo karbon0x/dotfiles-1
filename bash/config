@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 source "$HOME/dotfiles/bash/aliases"
 source "$HOME/dotfiles/bash/env"
 [[ -a "$HOME/.zshenv_private" ]] && source "$HOME/.zshenv_private" # Load privatly defined aliases and env if they exists
