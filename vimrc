@@ -6,7 +6,7 @@
 ""   Mislav Marohnić <mislav.uniqpath.com>
 ""   Steve Losh      <learnvimscriptthehardway.stevelosh.com>
 
-source ~/dotfiles/bundle.vim
+source ~/.dotfiles/bundle.vim
 runtime macros/matchit.vim  " enables % to cycle through `if/else/endif`
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
