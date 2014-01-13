@@ -76,6 +76,9 @@ set ttimeoutlen=100
 set splitright
 set splitbelow
 
+" Dont display mode in command linke
+set noshowmode
+
 " ignore Rubinius, Sass cache files
 set wildignore+=tmp/**,*.rbc,.rbx,*.scssc,*.sassc
 " ignore Bundler standalone/vendor installs & gems
@@ -171,6 +174,12 @@ if has("autocmd")
     autocmd InsertEnter * :set listchars-=trail:*
     autocmd InsertLeave * :set listchars+=trail:*
   augroup END
+
+  augroup airline_vim
+    autocmd!
+
+    autocmd VimEnter * call AirlineInit()
+  augroup END
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -189,6 +198,10 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM-STATUSLINE CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remove separators
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_whitespace=1 "icon and message (default)
@@ -196,7 +209,22 @@ let g:airline_exclude_preview = 0
 let g:airline_theme='solarized'
 let g:airline_enable_branch = 1
 let g:airline_branch_empty_message = ''
-let g:airline_section_x = ''
+let g:airline#extensions#tabline#enabled = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIM-STATUSLINE SETUP
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! AirlineInit()
+  let spc = ' '
+  let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'iminsert'])
+  let g:airline_section_b = airline#section#create(['BR:'.spc, 'branch'])
+  let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly'])
+  let g:airline_section_gutter = airline#section#create(['%='])
+  let g:airline_section_x = airline#section#create_right(['filetype'])
+  let g:airline_section_y = airline#section#create_right(['%3p%%'.spc])
+  let g:airline_section_z = airline#section#create(['LN'.spc, 'linenr', ':%3c '])
+  let g:airline_section_warning = airline#section#create(['syntastic', 'eclim', 'whitespace'])
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM KEY MAPS
