@@ -1,0 +1,31 @@
+# vim:ft=sh:
+#!/bin/bash
+
+run_list() {
+
+cat <<EOT
+
+OS X dotfiles - Jordan Faust
+Special thanks to Nicolas Gallagher for dotfile organization - http://nicolasgallagher.com/
+
+Additional software to install
+
+Browsers:
+    Firefox
+    Google Chrome
+
+Development:
+    iTerm 2
+    VirtualBox
+    Sublime Text 3
+
+Other:
+    Alfred 2
+    Moom
+    Growl
+    Textual
+    Spotify
+
+EOT
+
+}
