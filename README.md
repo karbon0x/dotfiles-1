@@ -83,17 +83,7 @@ Node packages:
 
 Vim plugins:
 
-* [ctrlp.vim](https://github.com/kien/ctrlp.vim)
-* [html5.vim](https://github.com/othree/html5.vim)
-* [mustache.vim](https://github.com/juvenn/mustache.vim)
-* [syntastic](https://github.com/scrooloose/syntastic)
-* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-* [vim-git](https://github.com/tpope/vim-git)
-* [vim-haml](https://github.com/tpope/vim-haml)
-* [vim-javascript](https://github.com/pangloss/vim-javascript)
-* [vim-less](https://github.com/groenewege/vim-less)
-* [vim-markdown](https://github.com/tpope/vim-markdown)
-* [vim-pathogen](https://github.com/tpope/vim-pathogen)
+See vim README
 
 ### Custom OS X defaults
 
@@ -151,10 +141,6 @@ following way:
 </table>
 
 Further details are in the `bash_prompt` file.
-
-Screenshot:
-
-![](http://i.imgur.com/DSJ1G.png)
 
 ### Local/private Bash and Vim configuration
 
