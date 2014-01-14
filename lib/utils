@@ -3,7 +3,7 @@
 
 # Header logging
 e_header() {
-    printf "\n$(tput setaf 7)%s$(tput sgr0)\n" "$@"
+    printf "\n$(tput setaf 3)%s$(tput sgr0)\n" "$@"
 }
 
 # Success logging
