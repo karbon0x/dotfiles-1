@@ -18,6 +18,7 @@ run_npm() {
         printf "\n"
         e_error "Error: npm not found."
         printf "Aborting...\n"
+        printf "Run: curl https://npmjs.org/install.sh | sh"
         exit
     fi
 

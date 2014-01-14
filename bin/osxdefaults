@@ -183,5 +183,5 @@ defaults write com.apple.spotlight DictionaryLookupEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 for app in "Dashboard" "Dock" "Finder" "SystemUIServer" "Terminal" "iTunes"; do
-killall "$app" > /dev/null 2>&1
+    killall "$app" > /dev/null 2>&1
 done
