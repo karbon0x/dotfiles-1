@@ -15,7 +15,7 @@ Options:
     --no-packages Suppress package updates
     --no-sync Suppress pulling from the remote repository
 
-Documentation can be found at https://github.com/necolas/dotfiles/
+Documentation can be found at https://github.com/JordanFaust/dotfiles/
 
 Copyright (c) Nicolas Gallagher
 Licensed under the MIT license.

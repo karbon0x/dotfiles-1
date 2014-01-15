@@ -24,6 +24,7 @@ source ./lib/list
 source ./lib/utils
 source ./lib/brew
 source ./lib/npm
+source ./lib/cask
 
 # Help text
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -102,6 +103,8 @@ else
     run_brew
     # Install Node packages
     run_npm
+    # Install Homebrew Cask casks
+    run_cask
 fi
 
 link() {

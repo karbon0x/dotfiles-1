@@ -15,6 +15,9 @@ run_brew() {
         brew upgrade
         [[ $? ]] && e_success "Done"
 
+        # Install the brew-cask tool
+        brew tap phinze/homebrew-cask
+
         e_header "Checking status of desired Homebrew formulae..."
         local list_formulae
         local -a missing_formulae
@@ -24,6 +27,7 @@ run_brew() {
             'ack'
             'bash'
             'bash-completion'
+            'brew-cask'
             'tmux'
             'vim'
             'node'
