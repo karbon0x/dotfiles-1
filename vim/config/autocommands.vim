@@ -84,25 +84,4 @@ if has("autocmd")
     autocmd InsertEnter * :set listchars-=trail:*
     autocmd InsertLeave * :set listchars+=trail:*
   augroup END
-
-  augroup airline_vim
-    autocmd!
-
-    autocmd VimEnter * call AirlineInit()
-  augroup END
 endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIM-STATUSLINE SETUP
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! AirlineInit()
-  let spc = ' '
-  let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'iminsert'])
-  let g:airline_section_b = airline#section#create(['BR:'.spc, 'branch'])
-  let g:airline_section_c = airline#section#create(['%<', 'file', spc, 'readonly'])
-  let g:airline_section_gutter = airline#section#create(['%='])
-  let g:airline_section_x = airline#section#create_right(['filetype'])
-  let g:airline_section_y = airline#section#create_right(['%3p%%'.spc])
-  let g:airline_section_z = airline#section#create(['LN'.spc, 'linenr', ':%3c '])
-  let g:airline_section_warning = airline#section#create(['syntastic', 'eclim', 'whitespace'])
-endfunction

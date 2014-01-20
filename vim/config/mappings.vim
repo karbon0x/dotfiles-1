@@ -1,6 +1,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CUSTOM KEY MAPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set leader to ,
+let mapleader=","
+
 " Operator pending mapping that effects the content of the surround
 " parentheses. Think of this as 'parentheses'
 " Example dp => 'delete parameters'
