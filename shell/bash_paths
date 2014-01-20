@@ -11,6 +11,7 @@ declare -a dirs_to_append=(
     "/usr/bin"
     "$HOME/bin"
     "$HOME/.dotfiles/bin"
+    "$HOME/.config/powerline"
     "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
     "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
     "/usr/local/Cellar/groovy/2.0.5/libexec"
