@@ -44,7 +44,7 @@ if has("autocmd")
     autocmd!
 
     " Make sure all markdown files have the correct filetype set and setup wrapping
-    autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
+    autocmd BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | set wrap | set wrapmargin=2
 
     " Treat JSON files like JavaScript
     autocmd BufRead,BufNewFile *.json set ft=javascript

@@ -19,9 +19,6 @@ onoremap inp :<c-u>normal! f(vi(<cr>
 " Example cil( => 'change inside last parentheses'
 onoremap ilp :<c-u>normal! F)vi(<cr>
 
-" Switch paste mode with F16 to quickly disable/enable indenting for paste.
-set pastetoggle=<F16>
-
 " Jump to next/previous screen row in the editor instead of the line when wrapping.
 nnoremap j gj
 nnoremap k gk
@@ -69,6 +66,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " copy to clipboard
 noremap <leader>y "+y
 
+" compile a maven project so that its parsable for the quickfix list
+nnoremap <leader>c :Dispatch mvn compile -q -f pom.xml<CR>
+
 " paste lines from unnamed register and fix indentation
 nnoremap <leader>p pV`]=
 nnoremap <leader>P PV`]=
@@ -93,6 +93,30 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 " Map toggling Taglist to <C-l>
 noremap <leader>l :TagbarToggle<CR>
 
+" Repurpose arrow keys to move lines
+" Inspired by http://jeetworks.com/node/89
+" Arrow key remapping:
+" Up/Dn = move line up/dn
+" Left/Right = indent/unindent
+
+" Normal mode
+nnoremap <silent> <Left>   <<
+nnoremap <silent> <Right>  >>
+nnoremap <silent> <Up>     <Esc>:call <SID>MoveLineUp()<CR>
+nnoremap <silent> <Down>   <Esc>:call <SID>MoveLineDown()<CR>
+
+" Visual mode
+vnoremap <silent> <Left>   <gv
+vnoremap <silent> <Right>  >gv
+vnoremap <silent> <Up>     <Esc>:call <SID>MoveVisualUp()<CR>
+vnoremap <silent> <Down>   <Esc>:call <SID>MoveVisualDown()<CR>
+
+" Insert mode
+inoremap <silent> <Left>   <C-D>
+inoremap <silent> <Right>  <C-T>
+inoremap <silent> <Up>     <C-O>:call <SID>MoveLineUp()<CR>
+inoremap <silent> <Down>   <C-O>:call <SID>MoveLineDown()<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PRESERVE HISTORY
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -114,14 +138,6 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! StripTrailingWhitespaces()
   call Preserve("%s/\\s\\+$//e")
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MARKDOWN WRAPPING
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:setupWrapping()
-  set wrap
-  set wrapmargin=2
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -217,3 +233,52 @@ function! GroovyAlternateForCurrentFile(current_file)
   endif
   return new_file
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Repurpose Arrow Keys
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! s:MoveLineUp()
+        call <SID>MoveLineOrVisualUp(".", "")
+endfunction
+
+function! s:MoveLineDown()
+        call <SID>MoveLineOrVisualDown(".", "")
+endfunction
+
+function! s:MoveVisualUp()
+        call <SID>MoveLineOrVisualUp("'<", "'<,'>")
+        normal gv
+endfunction
+
+function! s:MoveVisualDown()
+        call <SID>MoveLineOrVisualDown("'>", "'<,'>")
+        normal gv
+endfunction
+
+function! s:MoveLineOrVisualUp(line_getter, range)
+        let l_num = line(a:line_getter)
+        if l_num - v:count1 - 1 < 0
+                let move_arg = "0"
+        else
+                let move_arg = a:line_getter." -".(v:count1 + 1)
+        endif
+        call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+endfunction
+
+function! s:MoveLineOrVisualDown(line_getter, range)
+        let l_num = line(a:line_getter)
+        if l_num + v:count1 > line("$")
+                let move_arg = "$"
+        else
+                let move_arg = a:line_getter." +".v:count1
+        endif
+        call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+endfunction
+
+function! s:MoveLineOrVisualUpOrDown(move_arg)
+        let col_num = virtcol(".")
+        execute "silent! ".a:move_arg
+        execute "normal! ".col_num."|"
+endfunction
+
