@@ -3,49 +3,31 @@
 
 run_cask() {
 
-    # Check for Homebrew
-    if type_exists 'brew-cask'; then
-        e_header "Updating Homebrew Cask..."
-        # Upgrade any already-installed formulae
-        brew upgrade brew-cask
-        [[ $? ]] && e_success "Done"
+    # TODO: Check for Homebrew Cask first
+    e_header "Updating Homebrew Cask..."
+    # Upgrade any already-installed formulae
+    brew upgrade brew-cask
+    [[ $? ]] && e_success "Done"
 
-        e_header "Checking status of desired Homebrew Cask casks..."
-        local list_formulae
-        local -a missing_casks
-        local -a desired_casks=(
-            'alfred'
-            'iterm2'
-            'moom'
-            'spotify'
-            'virtualbox'
-            'google-chrome'
-            'firefox'
-        )
+    e_header "Checking status of desired Homebrew Cask casks..."
+    local list_formulae
+    local -a missing_casks
+    local -a desired_casks=(
+        'alfred'
+        'iterm2'
+        'moom'
+        'spotify'
+        'virtualbox'
+        'google-chrome'
+        'firefox'
+    )
 
-        for index in ${!desired_casks[*]}
-        do
-            if ! cask_exists ${desired_casks[$index]}; then
-                # Store the name (and options) of every missing formula
-                missing_formulae=("${missing_casks[@]}" "${desired_casks[$index]}")
-            fi
-        done
+    # Convert the array of casks into a list of space-separate strings
+    list_casks=$( printf "%s " "${desired_casks[@]}" )
 
-        if [[ "$missing_casks" ]]; then
-            # Convert the array of missing casks into a list of space-separate strings
-            list_casks=$( printf "%s " "${missing_casks[@]}" )
+    e_header "Installing missing Homebrew Cask casks..."
+    # Install all missing formulae
+    brew cask install $list_formulae
 
-            e_header "Installing missing Homebrew Cask casks..."
-            # Install all missing formulae
-            brew cask install $list_formulae
-
-            [[ $? ]] && e_success "Done"
-        fi
-    else
-        printf "\n"
-        e_error "Error: Homebrew Cask not found."
-        printf "Aborting...\n"
-        exit
-    fi
-
+    [[ $? ]] && e_success "Done"
 }
