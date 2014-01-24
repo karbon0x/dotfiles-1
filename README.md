@@ -61,15 +61,24 @@ Homebrew formulae:
 * [ack](http://betterthangrep.com/)
 * bash (latest version)
 * [bash-completion](http://bash-completion.alioth.debian.org/)
-* [ffmpeg](http://ffmpeg.org/)
-* [graphicsmagick](http://www.graphicsmagick.org/)
+* [brew-cask](https://github.com/phinze/homebrew-cask)
+* [ctags](http://ctags.sourceforge.net/)
+* [chruby](https://github.com/postmodern/chruby)
+* [groovy](http://groovy.codehaus.org/)
 * [jpeg](https://en.wikipedia.org/wiki/Libjpeg)
-* [macvim](http://code.google.com/p/macvim/)
 * [node](http://nodejs.org/)
-* [optipng](http://optipng.sourceforge.net/)
+* [maven](http://maven.apache.org/)
 * [phantomjs](http://phantomjs.org/)
+* [postgresql](http://www.postgresql.org/)
+* [reattach-to-user-namespace]()
 * [rsync](https://rsync.samba.org/) (latest version, rather than the out-dated OS X installation)
+* [ruby-build](https://github.com/sstephenson/ruby-build)
+* [sqlite](http://www.sqlite.org/)
+* [the_silver_searcher](https://github.com/ggreer/the_silver_searcher)
+* [thrift](http://thrift.apache.org/)
+* [tmux](http://tmux.sourceforge.net/)
 * [tree](http://mama.indstate.edu/users/ice/tree/)
+* [vim](http://www.vim.org/)
 * [wget](http://www.gnu.org/software/wget/)
 
 Node packages:
@@ -94,54 +103,6 @@ also be applied independently by running the following command:
 $ osxdefaults
 ```
 
-### Bootable backup-drive script
-
-These dotfiles include a script that uses `rync` to incrementally back up your
-data to an external, bootable clone of your computer's internal drive. First,
-make sure that the value of `DST` in the `bin/backup` script matches the name
-of your backup-drive. Then run the following command:
-
-```bash
-$ backup
-```
-
-For more information on how to setup your backup-drive, please read the
-preparatory steps in this post on creating a [Mac OS X bootable backup
-drive](http://nicolasgallagher.com/mac-osx-bootable-backup-drive-with-rsync/).
-
-### Custom bash prompt
-
-I use a custom bash prompt based on the Solarized color palette and influenced
-by @gf3's and @cowboy's custom prompts. For best results, you should install
-iTerm2 and import [Solarized
-Dark.itermcolors](https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized).
-
-When your current working directory is a Git repository, the prompt will
-display the checked-out branch's name (and failing that, the commit SHA that
-HEAD is pointing to). The state of the working tree is reflected in the
-following way:
-
-<table>
-    <tr>
-        <td><code>+</code></td>
-        <td>Uncommitted changes in the index</td>
-    </tr>
-    <tr>
-        <td><code>!</code></td>
-        <td>Unstaged changes</td>
-    </tr>
-    <tr>
-        <td><code>?</code></td>
-        <td>Untracked files</td>
-    </tr>
-    <tr>
-        <td><code>$</code></td>
-        <td>Stashed files</td>
-    </tr>
-</table>
-
-Further details are in the `bash_prompt` file.
-
 ### Local/private Bash and Vim configuration
 
 Any special-case Vim directives local to a machine should be stored in a
@@ -152,28 +113,6 @@ Any private and custom Bash commands and configuration should be placed in a
 `~/.bash_profile.local` file. This file will not be under version control or
 committed to a public repository. If `~/.bash_profile.local` exists, it will be
 sourced for inclusion in `bash_profile`.
-
-Here is an example `~/.bash_profile.local`:
-
-```bash
-# PATH exports
-PATH=$PATH:~/.gem/ruby/1.8/bin
-export PATH
-
-# Git credentials
-# Not under version control to prevent people from
-# accidentally committing with your details
-GIT_AUTHOR_NAME="Nicolas Gallagher"
-GIT_AUTHOR_EMAIL="nicolas@example.com"
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-# Set the credentials (modifies ~/.gitconfig)
-git config --global user.name "$GIT_AUTHOR_NAME"
-git config --global user.email "$GIT_AUTHOR_EMAIL"
-
-# Aliases
-alias code="cd ~/Code"
-```
 
 N.B. Because the `git/gitconfig` file is copied to `~/.gitconfig`, any private
 git configuration specified in `~/.bash_profile.local` will not be committed to
