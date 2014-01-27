@@ -5,10 +5,6 @@
 # Path to the bash it configuration
 export BASH_IT=$HOME/.bash_it
 
-# Setup chruby to check the /opt/rubies/ directory for installed rubies
-RUBIES+=(
-  /opt/rubies/
-)
 # Make vim the default editor
 export EDITOR='/usr/local/bin/vim'
 export BUNDLER_EDITOR=$EDITOR
