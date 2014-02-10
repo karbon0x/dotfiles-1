@@ -67,7 +67,7 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 noremap <leader>y "+y
 
 " compile a maven project so that its parsable for the quickfix list
-nnoremap <leader>c :Dispatch mvn compile -q -f pom.xml<CR>
+nnoremap <leader>m :Dispatch mvn compile -q -f pom.xml<CR>
 
 " paste lines from unnamed register and fix indentation
 nnoremap <leader>p pV`]=
@@ -88,6 +88,9 @@ nnoremap <leader>n :call RenameFile()<cr>
 
 " Strip the whitespace from the current buffer.
 map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
+
+" Run ctags in a dispatch window
+nnoremap <leader>c :Start! .git/hooks/ctags >/dev/null<CR>
 
 
 " Map toggling Taglist to <C-l>
@@ -281,4 +284,3 @@ function! s:MoveLineOrVisualUpOrDown(move_arg)
         execute "silent! ".a:move_arg
         execute "normal! ".col_num."|"
 endfunction
-
