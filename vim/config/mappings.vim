@@ -50,6 +50,12 @@ cnoremap <C-a> <Home>
 " Map toggling NERDTree to <C-n>
 noremap <C-n> :NERDTreeToggle<CR>
 
+" Map CtrlPBuffer to <C-b>
+noremap <C-b> :CtrlPBuffer<CR>
+
+" Map CtrlPMRU to <C-m>
+noremap <C-m> :CtrlPMRU<CR>
+
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
