@@ -135,11 +135,3 @@ let g:tagbar_type_groovy = {
     \ 'v:variables',
   \ ]
 \ }
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" EASYTAGS CONFIGURATIONS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:easytags_updatetime_min = 10000
-let g:easytags_dynamic_files = 2
-let g:easytags_events = ['BufWritePost']
