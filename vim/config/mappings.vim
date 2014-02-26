@@ -47,9 +47,6 @@ nnoremap <Space> za
 " In command-line mode, C-a jumps to beginning (to match C-e)
 cnoremap <C-a> <Home>
 
-" Map toggling NERDTree to <C-n>
-noremap <C-n> :NERDTreeToggle<CR>
-
 " Map CtrlPBuffer to <C-b>
 noremap <C-b> :CtrlPBuffer<CR>
 
@@ -97,10 +94,6 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 
 " Run ctags in a dispatch window
 nnoremap <leader>c :Start! .git/hooks/ctags >/dev/null<CR>
-
-
-" Map toggling Taglist to <C-l>
-noremap <leader>l :TagbarToggle<CR>
 
 " Repurpose arrow keys to move lines
 " Inspired by http://jeetworks.com/node/89
@@ -248,45 +241,45 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:MoveLineUp()
-        call <SID>MoveLineOrVisualUp(".", "")
+  call <SID>MoveLineOrVisualUp(".", "")
 endfunction
 
 function! s:MoveLineDown()
-        call <SID>MoveLineOrVisualDown(".", "")
+  call <SID>MoveLineOrVisualDown(".", "")
 endfunction
 
 function! s:MoveVisualUp()
-        call <SID>MoveLineOrVisualUp("'<", "'<,'>")
-        normal gv
+  call <SID>MoveLineOrVisualUp("'<", "'<,'>")
+  normal gv
 endfunction
 
 function! s:MoveVisualDown()
-        call <SID>MoveLineOrVisualDown("'>", "'<,'>")
-        normal gv
+  call <SID>MoveLineOrVisualDown("'>", "'<,'>")
+  normal gv
 endfunction
 
 function! s:MoveLineOrVisualUp(line_getter, range)
-        let l_num = line(a:line_getter)
-        if l_num - v:count1 - 1 < 0
-                let move_arg = "0"
-        else
-                let move_arg = a:line_getter." -".(v:count1 + 1)
-        endif
-        call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+  let l_num = line(a:line_getter)
+  if l_num - v:count1 - 1 < 0
+    let move_arg = "0"
+  else
+    let move_arg = a:line_getter." -".(v:count1 + 1)
+  endif
+  call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
 endfunction
 
 function! s:MoveLineOrVisualDown(line_getter, range)
-        let l_num = line(a:line_getter)
-        if l_num + v:count1 > line("$")
-                let move_arg = "$"
-        else
-                let move_arg = a:line_getter." +".v:count1
-        endif
-        call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+  let l_num = line(a:line_getter)
+  if l_num + v:count1 > line("$")
+    let move_arg = "$"
+  else
+    let move_arg = a:line_getter." +".v:count1
+  endif
+  call <SID>MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
 endfunction
 
 function! s:MoveLineOrVisualUpOrDown(move_arg)
-        let col_num = virtcol(".")
-        execute "silent! ".a:move_arg
-        execute "normal! ".col_num."|"
+  let col_num = virtcol(".")
+  execute "silent! ".a:move_arg
+  execute "normal! ".col_num."|"
 endfunction
