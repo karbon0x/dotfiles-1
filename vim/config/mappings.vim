@@ -50,8 +50,7 @@ cnoremap <C-a> <Home>
 " Map CtrlPBuffer to <C-b>
 noremap <C-b> :CtrlPBuffer<CR>
 
-" Map CtrlPMRU to <C-m>
-noremap <C-m> :CtrlPMRU<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
@@ -94,6 +93,8 @@ map <silent> <leader>w :call StripTrailingWhitespaces()<CR>
 
 " Run ctags in a dispatch window
 nnoremap <leader>c :Start! .git/hooks/ctags >/dev/null<CR>
+
+nnoremap <leader>k :OnlineThesaurusCurrentWord<CR>
 
 " Repurpose arrow keys to move lines
 " Inspired by http://jeetworks.com/node/89
