@@ -29,6 +29,7 @@ Bundle 'sleistner/vim-jshint'
 Bundle 'groenewege/vim-less'
 Bundle "terryma/vim-multiple-cursors"
 Bundle 'xolox/vim-misc'
+Bundle 'beloglazov/vim-online-thesaurus'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-repeat'
 Bundle 'vim-ruby/vim-ruby'
