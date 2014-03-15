@@ -140,6 +140,7 @@ mirrorfiles() {
     link "vim/ctags" ".ctags"
     link "ruby/gemrc" ".gemrc"
     link "ruby/pryrc" ".pryrc"
+    link "atom" ".atom"
 
     e_success "Dotfiles update complete!"
 }
