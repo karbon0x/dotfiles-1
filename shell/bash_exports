@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 
 # bash_exports
 
@@ -18,6 +18,8 @@ export RUBY_FREE_MIN=600000
 
 # Maven
 export MAVEN_OPTS="-Xms750m -Xmx2100m -XX:MaxPermSize=384m -XX:+UseCompressedOops"
+# Prevent Maven builds from stealing focus
+export JAVA_TOOL_OPTIONS='-Djava.awt.headless=true'
 
 # Ignore duplicate commands in the history
 export HISTCONTROL=ignoredups
