@@ -1,2 +1,4 @@
 vim/bundle/*
 vim/.netrwhist
+atom/storage/*
+atom/.node-gyp/*
