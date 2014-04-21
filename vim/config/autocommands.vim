@@ -26,6 +26,12 @@ if has("autocmd")
     autocmd FileType groovy let b:dispatch = 'mvn test -Dtest=' . expand("%:t:r")
     autocmd FileType java let b:dispatch = 'mvn test -Dtest=' . expand("%:t:r")
 
+    " Setup indent rules for Java
+    autocmd Filetype java setlocal softtabstop=4 tabstop=4 shiftwidth=4
+
+    " Setup tab spacing and syntax for avro models.
+    autocmd Filetype avdl setlocal shiftwidth=2 tabstop=2 expandtab=2 expandtab=4
+
     " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
     autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
@@ -57,6 +63,12 @@ if has("autocmd")
 
     " Set the filetype to rust when opening a rust file
     autocmd BufRead,BufNewFile *.rs set ft=rust
+
+    " Set the filetype to scala when opening a scala file
+    autocmd BufRead,BufNewFile *.scala set ft=scala
+
+    " Set the filetype to C when opening a avro file
+    autocmd BufRead,BufNewFile *.avdl set ft=c
 
     " Remember last location in file, but not for commit messages.
     " see :help last-position-jump
