@@ -42,5 +42,5 @@ load_dotfiles() {
 load_dotfiles
 unset load_dotfiles
 
-# Set ruby 1.9.3 as the default ruby
-chruby 1.9.3
+# Set ruby 2 as the default ruby
+chruby 2
