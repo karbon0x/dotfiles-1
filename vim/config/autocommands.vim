@@ -36,7 +36,7 @@ if has("autocmd")
     autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
     " Setup dispatch to default to running the current test file
-    autocmd FileType ruby let b:dispatch = 'rspec %'
+    autocmd FileType ruby let b:dispatch = 'bundle exec rspec %'
 
     " Setup tab spacing for Rust
     autocmd FileType rust setlocal softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
