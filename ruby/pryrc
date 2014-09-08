@@ -35,4 +35,15 @@ def paste
   `pbpaste`
 end
 
+def debug
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end
+
+Hirb.enable if require 'hirb'
+if Object.const_defined?('Hirb')
+  old_print = Pry.config.print
+  Pry.config.print = proc do |*args|
+    Hirb::View.view_or_page_output(args[1]) || old_print.call(*args)
+  end
+end
 # vim:ft=ruby:
