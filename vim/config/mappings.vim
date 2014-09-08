@@ -96,6 +96,9 @@ nnoremap <leader>c :Start! .git/hooks/ctags >/dev/null<CR>
 
 nnoremap <leader>k :OnlineThesaurusCurrentWord<CR>
 
+" Open Tagbar
+nnoremap <leader>b :Tagbar<CR>
+
 " Repurpose arrow keys to move lines
 " Inspired by http://jeetworks.com/node/89
 " Arrow key remapping:
