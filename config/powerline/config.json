@@ -32,7 +32,7 @@
 			"theme": "default"
 		},
 		"vim": {
-			"colorscheme": "solarized",
+			"colorscheme": "solarizedlight",
 			"theme": "default",
 			"local_themes": {
 				"cmdwin": "cmdwin",

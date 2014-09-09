@@ -1,0 +1,11 @@
+{
+  "name": "Solarized light color scheme for terminal prompts",
+  "groups": {
+    "background:divider":       { "fg": "azure4", "bg": "darkgreencopper" },
+    "session": { "fg": "oldlace", "bg": "green", "attr": ["bold"]  },
+    "date": { "fg": "oldlace", "bg": "royalblue5", "attr": ["bold"] },
+    "time": {  "fg": "oldlace", "bg": "royalblue5", "attr": ["bold"]  },
+    "time:divider": { "fg": "oldlace", "bg": "royalblue5"  },
+    "now_playing": { "fg": "gray61", "bg": "darkgreencopper" }
+  }
+}
