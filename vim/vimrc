@@ -93,9 +93,11 @@ set wildignore+=node_modules/**
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set t_Co=256
-set background=light
-color solarized 
+
+" let g:solarized_termcolors=256
+" set t_Co=256
+set background=dark
+color solarized
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE

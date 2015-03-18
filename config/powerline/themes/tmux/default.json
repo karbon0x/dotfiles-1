@@ -1,23 +1,12 @@
 {
-  "default_module": "powerline.segments.common",
-  "segment_data": {
-    "date": {
-      "before": ""
-    }
-  },
   "segments": {
     "right": [
       {
-        "name": "now_playing",
-        "args": {
-          "player": "spotify"
-        }
+        "function": "powerline.segments.common.time.date"
       },
       {
-        "name": "date"
-      },
-      {
-        "name": "date",
+        "function": "powerline.segments.common.time.date",
+        "name": "time",
         "args": {
           "format": "%H:%M",
           "istime": true

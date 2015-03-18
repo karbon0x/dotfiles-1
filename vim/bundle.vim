@@ -9,6 +9,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 filetype plugin indent on
 
+Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+
 Bundle 'mileszs/ack.vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/ctrlp.vim'
