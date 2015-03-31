@@ -42,5 +42,8 @@ load_dotfiles() {
 load_dotfiles
 unset load_dotfiles
 
+# Setup jenv
+eval "$(jenv init -)"
+
 # Set ruby 2 as the default ruby
 chruby 2
