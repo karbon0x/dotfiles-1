@@ -141,6 +141,7 @@ mirrorfiles() {
     link "ruby/gemrc" ".gemrc"
     link "ruby/pryrc" ".pryrc"
     link "atom" ".atom"
+    link "config" ".config"
 
     e_success "Dotfiles update complete!"
 }
