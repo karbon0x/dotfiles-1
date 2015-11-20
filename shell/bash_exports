@@ -16,8 +16,12 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1.25
 export RUBY_GC_HEAP_INIT_SLOTS=800000
 export RUBY_GC_HEAP_FREE_SLOTS=600000
 
+export CC=`brew --prefix apple-gcc42`/bin/gcc-4.2
+export CXX=`brew --prefix apple-gcc42`/bin/g++-4.2
+
 # Maven
-export MAVEN_OPTS="-Xms750m -Xmx2100m -XX:MaxPermSize=384m -XX:+UseCompressedOops"
+export MAVEN_OPTS='-Xms2000m -Xmx3500m -XX:MaxPermSize=1024m'
+
 # Prevent Maven builds from stealing focus
 export JAVA_TOOL_OPTIONS='-Djava.awt.headless=true'
 
@@ -45,3 +49,6 @@ export PHANTOMJS_BIN="$(brew --prefix)/bin/phantomjs"
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Path to GHC
+export GHC_DOT_APP="/Applications/ghc-7.8.4.app"
