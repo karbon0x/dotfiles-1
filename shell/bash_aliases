@@ -177,3 +177,6 @@ alias mysql='mysql -u root -p'
 
 ## Redis
 alias start_redis='redis-server /usr/local/etc/redis.conf'
+
+## Start eclim daemon
+alias start_eclimd='/opt/eclipse/Contents/Eclipse/eclimd'
