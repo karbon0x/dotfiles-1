@@ -276,9 +276,9 @@ layers configuration. You are free to put any user code."
   (setq require-final-newline 'visit-save)
 
   ;; make lines over 100 characters stand out
-  (setq whitespace-style '(face empty tabs lines-tail trailing))
-  (setq whitespace-line-column 120)
-  (global-whitespace-mode t)
+  ;; (setq whitespace-style '(face empty tabs lines-tail trailing))
+  ;; (setq whitespace-line-column 120)
+  ;; (global-whitespace-mode t)
 
   ;; Turn on backup files
   (setq make-backup-files nil)
@@ -287,6 +287,30 @@ layers configuration. You are free to put any user code."
   (setq eclim-eclipse-dirs "/opt/eclipse"
         eclim-executable "/opt/eclipse/Contents/Eclipse/eclim")
   (setq auto-completion-enable-snippets-in-popup t)
+
+  ;; Add support for Cerner hosted Enterprise Github repos 
+  (eval-after-load "git-link"
+    '(progn
+       (add-to-list 'git-link-remote-alist
+                    '("github.cerner.com" git-link-github))
+       (add-to-list 'git-link-commit-remote-alist
+                    '("github.cerner.com" git-link-commit-github))))
+
+  ;; Java coding conventions
+  (add-hook 'prog-mode-hook
+      (lambda ()
+        (setq c-basic-offset 2
+              tab-width 2
+              indent-tags-mode nil)))
+
+  ;;
+  ;; Scala Config
+  ;;
+  ;; Setup path
+  ;; (setq exec-path (append exec-path '("/usr/local/bin")))
+
+  (setq-default dotspacemacs-configuration-layers '(
+    (scala :variables scala-auto-insert-asterisk-in-comments t)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
