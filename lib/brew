@@ -16,7 +16,7 @@ run_brew() {
         [[ $? ]] && e_success "Done"
 
         # Install the brew-cask tool
-        brew tap phinze/homebrew-cask
+        brew tap caskroom/cask
 
         e_header "Checking status of desired Homebrew formulae..."
         local list_formulae
