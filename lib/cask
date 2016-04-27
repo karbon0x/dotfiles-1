@@ -5,8 +5,7 @@ run_cask() {
 
     # TODO: Check for Homebrew Cask first
     e_header "Updating Homebrew Cask..."
-    # Upgrade any already-installed formulae
-    brew upgrade brew-cask
+
     [[ $? ]] && e_success "Done"
 
     e_header "Checking status of desired Homebrew Cask casks..."
