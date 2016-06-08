@@ -179,4 +179,4 @@ alias mysql='mysql -u root -p'
 alias start_redis='redis-server /usr/local/etc/redis.conf'
 
 ## Start eclim daemon
-alias start_eclimd='/opt/eclipse/Contents/Eclipse/eclimd'
+alias start_eclimd='/Applications/Eclipse.app/Contents/Eclipse/eclimd'
