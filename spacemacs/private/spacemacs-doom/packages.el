@@ -62,6 +62,7 @@
 
     ;; Additional packages from Doom
     beacon
+    hl-line
     nlinum
     ))
 
@@ -890,6 +891,22 @@ It will toggle the overlay under point or create an overlay of one character."
     (setq beacon-color (face-attribute 'highlight :background nil t)
           beacon-blink-when-buffer-changes t
           beacon-blink-when-point-moves-vertically 10)))
+
+(defun spacemacs-doom/init-hl-line ()
+  (use-package hl-line
+    :init (add-hook 'prog-mode-hook 'hl-line-mode)
+    :config
+    ;; Doesn't seem to play nice in emacs 25+
+    (setq hl-line-sticky-flag nil
+          global-hl-line-sticky-flag nil)
+
+    (defvar-local doom--hl-line-mode nil)
+    (defun doom|hl-line-on ()  (if doom--hl-line-mode (hl-line-mode +1)))
+    (defun doom|hl-line-off () (if doom--hl-line-mode (hl-line-mode -1)))
+    (add-hook! hl-line-mode (if hl-line-mode (setq doom--hl-line-mode t)))
+    ;; Disable line highlight in visual mode
+    (add-hook 'evil-visual-state-entry-hook 'doom|hl-line-off)
+    (add-hook 'evil-visual-state-exit-hook  'doom|hl-line-on)))
 
 (defun spacemacs-doom/init-nlinum ()
   (use-package nlinum
