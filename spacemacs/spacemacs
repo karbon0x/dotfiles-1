@@ -50,6 +50,10 @@ values."
      spell-checking
      syntax-checking
 
+     ;;
+     ;; Custom Layers
+     ;;
+
      ;; Doom Layers
      spacemacs-doom
      spacemacs-doom-popup
@@ -57,14 +61,16 @@ values."
      spacemacs-doom-themes
      spacemacs-doom-vcs
      spacemacs-doom-neotree
+
+     ;; General Language Layers
+     java-c-style
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
-   '(
-     google-c-style)
+   '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -263,144 +269,9 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (defmacro add-hook! (hook &rest func-or-forms)
-    "A convenience macro for `add-hook'.
-  HOOK can be one hook or a list of hooks. If the hook(s) are not quoted, -hook is
-  appended to them automatically. If they are quoted, they are used verbatim.
-  FUNC-OR-FORMS can be a quoted symbol, a list of quoted symbols, or forms. Forms will be
-  wrapped in a lambda. A list of symbols will expand into a series of add-hook calls.
-  Examples:
-      (add-hook! 'some-mode-hook 'enable-something)
-      (add-hook! some-mode '(enable-something and-another))
-      (add-hook! '(one-mode-hook second-mode-hook) 'enable-something)
-      (add-hook! (one-mode second-mode) 'enable-something)
-      (add-hook! (one-mode second-mode) (setq v 5) (setq a 2))"
-    (declare (indent defun) (debug t))
-    (unless func-or-forms
-      (error "add-hook!: FUNC-OR-FORMS is empty"))
-    (let* ((val (car func-or-forms))
-          (quoted (eq (car-safe hook) 'quote))
-          (hook (if quoted (cadr hook) hook))
-          (funcs (if (eq (car-safe val) 'quote)
-                      (if (cdr-safe (cadr val))
-                          (cadr val)
-                        (list (cadr val)))
-                    (list func-or-forms)))
-          (forms '()))
-      (mapc
-      (lambda (f)
-        (let ((func (cond ((symbolp f) `(quote ,f))
-                          (t `(lambda (&rest _) ,@func-or-forms)))))
-          (mapc
-            (lambda (h)
-              (push `(add-hook ',(if quoted h (intern (format "%s-hook" h))) ,func) forms))
-            (-list hook)))) funcs)
-      `(progn ,@forms)))
+  ;; Define custom macros
+  (define-macros)
 
-  (defmacro after! (feature &rest forms)
-    "A smart wrapper around `with-eval-after-load', that supresses warnings
-during compilation."
-    (declare (indent defun) (debug t))
-    `(,(if (or (not (boundp 'byte-compile-current-file))
-               (not byte-compile-current-file)
-               (if (symbolp feature)
-                   (require feature nil :no-error)
-                 (load feature :no-message :no-error)))
-           'progn
-         (message "after: cannot find %s" feature)
-         'with-no-warnings)
-      (with-eval-after-load ',feature ,@forms)))
-
-  (after! evil
-  (defalias 'ex! 'evil-ex-define-cmd)
-
-  ;; NOTE evil-mode doesn't read local `evil-ex-commands', and will not
-  ;; autocomplete local commands.
-  (defun ex-local! (cmd fn)
-    "Define a buffer-local ex command."
-    (unless (local-variable-p 'evil-ex-commands)
-      (setq-local evil-ex-commands (copy-alist evil-ex-commands)))
-    (evil-ex-define-cmd cmd fn))
-
-  ;; Register keywords for proper indentation (see `map!')
-  (put ':prefix      'lisp-indent-function 'defun)
-  (put ':map         'lisp-indent-function 'defun)
-  (put ':after       'lisp-indent-function 'defun)
-  (put ':when        'lisp-indent-function 'defun)
-  (put ':unless      'lisp-indent-function 'defun)
-  (put ':leader      'lisp-indent-function 'defun)
-  (put ':localleader 'lisp-indent-function 'defun)
-
-  (defmacro map! (&rest rest)
-    (let ((i 0)
-          (keymaps (if (boundp 'keymaps) keymaps))
-          (default-keymaps '((current-global-map)))
-          (state-map '(("n" . normal)
-                       ("v" . visual)
-                       ("i" . insert)
-                       ("e" . emacs)
-                       ("o" . operator)
-                       ("m" . motion)
-                       ("r" . replace)))
-          (prefix (if (boundp 'prefix) prefix))
-          key def states forms)
-      (unless keymaps
-        (setq keymaps default-keymaps))
-      (while rest
-        (setq key (pop rest))
-        (push
-         (reverse
-          (cond ((listp key) ; it's a sub exp
-                 `(,(macroexpand `(map! ,@key))))
-
-                ((keywordp key)
-                 (when (memq key '(:leader :localleader))
-                   (push (cond ((eq key :leader)
-                                doom-leader)
-                               ((eq key :localleader)
-                                doom-localleader))
-                         rest)
-                   (setq key :prefix))
-                 (pcase key
-                   (:prefix  (setq prefix (concat prefix (kbd (pop rest)))) nil)
-                   (:map     (setq keymaps (-list (pop rest))) nil)
-                   (:unset  `(,(macroexpand `(map! ,(kbd (pop rest)) nil))))
-                   (:after   (prog1 `((after! ,(pop rest)   ,(macroexpand `(map! ,@rest)))) (setq rest '())))
-                   (:when    (prog1 `((if ,(pop rest)       ,(macroexpand `(map! ,@rest)))) (setq rest '())))
-                   (:unless  (prog1 `((if (not ,(pop rest)) ,(macroexpand `(map! ,@rest)))) (setq rest '())))
-                   (otherwise ; might be a state prefix
-                    (mapc (lambda (letter)
-                            (if (assoc letter state-map)
-                                (push (cdr (assoc letter state-map)) states)
-                              (user-error "Invalid mode prefix %s in key %s" letter key)))
-                          (split-string (substring (symbol-name key) 1) "" t))
-                    (unless states
-                      (user-error "Unrecognized keyword %s" key)) nil)))
-
-                ;; It's a key-def pair
-                ((or (stringp key)
-                     (characterp key)
-                     (vectorp key))
-                 (when (stringp key)
-                   (setq key (kbd key)))
-                 (when prefix
-                   (setq key (cond ((vectorp key) (vconcat prefix key))
-                                   (t (concat prefix key)))))
-                 (unless (> (length rest) 0)
-                   (user-error "Map has no definition for %s" key))
-                 (setq def (pop rest))
-                 (let (out-forms)
-                   (mapc (lambda (keymap)
-                           (if states
-                               (push `(evil-define-key ',states ,keymap ,key ,def) out-forms)
-                             (push `(define-key ,keymap ,key ,def) out-forms)))
-                         keymaps)
-                   (setq states '())
-                   out-forms))
-                (t (user-error "Invalid key %s" key))))
-         forms)
-        (setq i (1+ i)))
-      `(progn ,@(apply #'nconc (delete nil (delete (list nil) (reverse forms))))))))
   (setq-default
     indicate-buffer-boundaries nil ; don't show where buffer starts/ends
     indicate-empty-lines nil       ; don't show empty lines
@@ -430,7 +301,14 @@ during compilation."
     jit-lock-stealth-verbose nil
     ;; Minibuffer resizing
     resize-mini-windows 'grow-only
-    max-mini-window-height 0.3))
+    max-mini-window-height 0.3
+
+    ;; Color-coded state cursors
+    evil-default-cursor (face-attribute 'minibuffer-prompt :foreground nil t)
+    evil-normal-state-cursor 'box
+    evil-emacs-state-cursor  `(,(face-attribute 'shadow :foreground nil nil) box)
+    evil-insert-state-cursor 'bar
+    evil-visual-state-cursor 'hollow))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -510,89 +388,6 @@ layers configuration. You are free to put any user code."
        (add-to-list 'git-link-commit-remote-alist
                     '("github.cerner.com" git-link-commit-github))))
 
-  ;; Java coding conventions
-  (defconst google-java-style
-    `((c-recognize-knr-p . nil)
-      (c-enable-xemacs-performance-kludge-p . t) ; speed up indentation in XEmacs
-      (c-basic-offset . 2)
-      (indent-tabs-mode . nil)
-      (c-comment-only-line-offset . 0)
-      (c-hanging-braces-alist . ((defun-open after)
-                                (defun-close before after)
-                                (class-open after)
-                                (class-close before after)
-                                (inexpr-class-open after)
-                                (inexpr-class-close before)
-                                (namespace-open after)
-                                (inline-open after)
-                                (inline-close before after)
-                                (block-open after)
-                                (block-close . c-snug-do-while)
-                                (extern-lang-open after)
-                                (extern-lang-close after)
-                                (statement-case-open after)
-                                (substatement-open after)))
-      (c-hanging-colons-alist . ((case-label)
-                                (label after)
-                                (access-label after)
-                                (member-init-intro before)
-                                (inher-intro)))
-      (c-hanging-semi&comma-criteria
-      . (c-semi&comma-no-newlines-for-oneline-inliners
-          c-semi&comma-inside-parenlist
-          c-semi&comma-no-newlines-before-nonblanks))
-      (c-indent-comments-syntactically-p . t)
-      (comment-column . 40)
-      (c-indent-comment-alist . ((other . (space . 2))))
-      (c-cleanup-list . (brace-else-brace
-                        brace-elseif-brace
-                        brace-catch-brace
-                        empty-defun-braces
-                        defun-close-semi
-                        list-close-comma
-                        scope-operator))
-      (c-offsets-alist . ((arglist-intro google-c-lineup-expression-plus-4)
-                          ;; (arglist-cont-nonempty 4)
-                          (func-decl-cont . ++)
-                          (member-init-intro . ++)
-                          (inher-intro . ++)
-                          (comment-intro . 0)
-                          ;; make continuations 4 spaces from start of line
-                          (arglist-cont . 4)
-                          (arglist-cont-nonempty . 4)
-                          (arglist-close . 4)
-                          (topmost-intro . 0)
-                          (block-open . 0)
-                          (inline-open . 0)
-                          (substatement-open . 0)
-                          (statement-cont
-                          .
-                          (,(when (fboundp 'c-no-indent-after-java-annotations)
-                              'c-no-indent-after-java-annotations)
-                            ,(when (fboundp 'c-lineup-assignments)
-                              'c-lineup-assignments)
-                            ++))
-                          (label . /)
-                          (case-label . +)
-                          (statement-case-open . +)
-                          (statement-case-intro . +) ; case w/o {
-                          (access-label . /)
-                          (innamespace . 0))))
-    "Google Java Programming Style.")
-  (add-hook 'c-mode-common-hook
-         (lambda()
-           (subword-mode)
-           (c-add-style "Google-Java" google-java-style t)
-           (google-make-newline-indent)
-           ;; (c-set-offset 'arglist-close 4)
-           ;; default continuations to 4 spaces
-           ;; (c-set-offset 'c-lineup-assignments 4)
-           ;; ;; when hitting enter within method parameters block make continuations 4 spaces from start of current line
-           ;; (c-set-offset 'c-lineup-assignments ('arglist-cont-nonempty 4))
-           (setq c-basic-offset 2
-                 tab-width 2)))
-  (setq fci-rule-column 100)
-
   ;;
   ;; Scala Config
   ;;
@@ -602,6 +397,146 @@ layers configuration. You are free to put any user code."
   (setq-default dotspacemacs-configuration-layers '(
     (scala :variables scala-auto-insert-asterisk-in-comments t)))
   )
+
+(defun define-macros ()
+  (defmacro add-hook! (hook &rest func-or-forms)
+    "A convenience macro for `add-hook'.
+  HOOK can be one hook or a list of hooks. If the hook(s) are not quoted, -hook is
+  appended to them automatically. If they are quoted, they are used verbatim.
+  FUNC-OR-FORMS can be a quoted symbol, a list of quoted symbols, or forms. Forms will be
+  wrapped in a lambda. A list of symbols will expand into a series of add-hook calls.
+  Examples:
+      (add-hook! 'some-mode-hook 'enable-something)
+      (add-hook! some-mode '(enable-something and-another))
+      (add-hook! '(one-mode-hook second-mode-hook) 'enable-something)
+      (add-hook! (one-mode second-mode) 'enable-something)
+      (add-hook! (one-mode second-mode) (setq v 5) (setq a 2))"
+    (declare (indent defun) (debug t))
+    (unless func-or-forms
+      (error "add-hook!: FUNC-OR-FORMS is empty"))
+    (let* ((val (car func-or-forms))
+          (quoted (eq (car-safe hook) 'quote))
+          (hook (if quoted (cadr hook) hook))
+          (funcs (if (eq (car-safe val) 'quote)
+                      (if (cdr-safe (cadr val))
+                          (cadr val)
+                        (list (cadr val)))
+                    (list func-or-forms)))
+          (forms '()))
+      (mapc
+      (lambda (f)
+        (let ((func (cond ((symbolp f) `(quote ,f))
+                          (t `(lambda (&rest _) ,@func-or-forms)))))
+          (mapc
+            (lambda (h)
+              (push `(add-hook ',(if quoted h (intern (format "%s-hook" h))) ,func) forms))
+            (-list hook)))) funcs)
+      `(progn ,@forms)))
+
+  (defmacro after! (feature &rest forms)
+    "A smart wrapper around `with-eval-after-load', that supresses warnings
+during compilation."
+    (declare (indent defun) (debug t))
+    `(,(if (or (not (boundp 'byte-compile-current-file))
+               (not byte-compile-current-file)
+               (if (symbolp feature)
+                   (require feature nil :no-error)
+                 (load feature :no-message :no-error)))
+           'progn
+         (message "after: cannot find %s" feature)
+         'with-no-warnings)
+      (with-eval-after-load ',feature ,@forms)))
+
+  (after! evil
+    (defalias 'ex! 'evil-ex-define-cmd)
+
+    ;; NOTE evil-mode doesn't read local `evil-ex-commands', and will not
+    ;; autocomplete local commands.
+    (defun ex-local! (cmd fn)
+      "Define a buffer-local ex command."
+      (unless (local-variable-p 'evil-ex-commands)
+        (setq-local evil-ex-commands (copy-alist evil-ex-commands)))
+      (evil-ex-define-cmd cmd fn))
+
+    ;; Register keywords for proper indentation (see `map!')
+    (put ':prefix      'lisp-indent-function 'defun)
+    (put ':map         'lisp-indent-function 'defun)
+    (put ':after       'lisp-indent-function 'defun)
+    (put ':when        'lisp-indent-function 'defun)
+    (put ':unless      'lisp-indent-function 'defun)
+    (put ':leader      'lisp-indent-function 'defun)
+    (put ':localleader 'lisp-indent-function 'defun)
+
+    (defmacro map! (&rest rest)
+      (let ((i 0)
+            (keymaps (if (boundp 'keymaps) keymaps))
+            (default-keymaps '((current-global-map)))
+            (state-map '(("n" . normal)
+                        ("v" . visual)
+                        ("i" . insert)
+                        ("e" . emacs)
+                        ("o" . operator)
+                        ("m" . motion)
+                        ("r" . replace)))
+            (prefix (if (boundp 'prefix) prefix))
+            key def states forms)
+        (unless keymaps
+          (setq keymaps default-keymaps))
+        (while rest
+          (setq key (pop rest))
+          (push
+          (reverse
+            (cond ((listp key) ; it's a sub exp
+                  `(,(macroexpand `(map! ,@key))))
+
+                  ((keywordp key)
+                  (when (memq key '(:leader :localleader))
+                    (push (cond ((eq key :leader)
+                                  doom-leader)
+                                ((eq key :localleader)
+                                  doom-localleader))
+                          rest)
+                    (setq key :prefix))
+                  (pcase key
+                    (:prefix  (setq prefix (concat prefix (kbd (pop rest)))) nil)
+                    (:map     (setq keymaps (-list (pop rest))) nil)
+                    (:unset  `(,(macroexpand `(map! ,(kbd (pop rest)) nil))))
+                    (:after   (prog1 `((after! ,(pop rest)   ,(macroexpand `(map! ,@rest)))) (setq rest '())))
+                    (:when    (prog1 `((if ,(pop rest)       ,(macroexpand `(map! ,@rest)))) (setq rest '())))
+                    (:unless  (prog1 `((if (not ,(pop rest)) ,(macroexpand `(map! ,@rest)))) (setq rest '())))
+                    (otherwise ; might be a state prefix
+                      (mapc (lambda (letter)
+                              (if (assoc letter state-map)
+                                  (push (cdr (assoc letter state-map)) states)
+                                (user-error "Invalid mode prefix %s in key %s" letter key)))
+                            (split-string (substring (symbol-name key) 1) "" t))
+                      (unless states
+                        (user-error "Unrecognized keyword %s" key)) nil)))
+
+                  ;; It's a key-def pair
+                  ((or (stringp key)
+                      (characterp key)
+                      (vectorp key))
+                  (when (stringp key)
+                    (setq key (kbd key)))
+                  (when prefix
+                    (setq key (cond ((vectorp key) (vconcat prefix key))
+                                    (t (concat prefix key)))))
+                  (unless (> (length rest) 0)
+                    (user-error "Map has no definition for %s" key))
+                  (setq def (pop rest))
+                  (let (out-forms)
+                    (mapc (lambda (keymap)
+                            (if states
+                                (push `(evil-define-key ',states ,keymap ,key ,def) out-forms)
+                              (push `(define-key ,keymap ,key ,def) out-forms)))
+                          keymaps)
+                    (setq states '())
+                    out-forms))
+                  (t (user-error "Invalid key %s" key))))
+          forms)
+          (setq i (1+ i)))
+        `(progn ,@(apply #'nconc (delete nil (delete (list nil) (reverse forms)))))))))
 
 
 ;; Do not write anything past this comment. This is where Emacs will
