@@ -98,7 +98,7 @@
       :group 'doom-neotree)
 
     (define-obsolete-variable-alias 'doom-neotree-enable-file-icons 'doom-neotree-file-icons)
-    (defcustom doom-neotree-file-icons 'simple
+    (defcustom doom-neotree-file-icons t
       "The style to use for the file icons. Can be nil (disabled), non-nil (for a
     diverse iconset), or 'simple, which is closest's to Atom's style as it only
     distinguishes text, source, pdfs, images and binary files."
@@ -292,29 +292,10 @@
           (let ((origin-buffer-file-name (buffer-file-name)))
             (neotree-find (projectile-project-root))
             (neotree-find origin-buffer-file-name))))
-      (message "defining keybindings")
       (spacemacs/set-leader-keys
         "ft" 'neotree-toggle
         "pt" 'neotree-find-project-root))
     :config
-    ;; (evil-set-initial-state 'neotree-mode 'motion)
-    ;; (add-hook 'neo-after-create-hook 'doom-hide-mode-line-mode)
-
-    ;; ;; A custom and simple theme for neotree
-    ;; (advice-add 'neo-buffer--insert-fold-symbol :override 'doom*neo-insert-fold-symbol)
-    ;; ;; Shorter pwd in neotree
-    ;; (advice-add 'neo-buffer--insert-root-entry :filter-args 'doom*neo-insert-root-entry)
-    ;; ;; Don't ask for confirmation when creating files
-    ;; (advice-add 'neotree-create-node :around 'doom*neotree-create-node)
-    ;; ;; Prevents messing up the neotree buffer on window changes
-    ;; (advice-add 'doom/evil-window-move :around 'doom*save-neotree)
-
-    ;; (set-default doom-neotree-enable-folder-icons t)
-
-    ;; ;; Minimize 'border' between windows (won't work in hook)
-    ;; (defun doom*neotree-no-fringes () (set-window-fringes neo-global--window 1 0))
-    ;; (advice-add 'neo-global--select-window :after 'doom*neotree-no-fringes)
-
     (add-hook! neotree-mode
       (set (make-local-variable 'hl-line-sticky-flag) t)
       (setq line-spacing 2)
@@ -328,42 +309,25 @@
       (advice-add 'neo-buffer--insert-file-entry :override 'doom--neo-buffer--insert-file-entry)
       (advice-add 'neo-buffer--insert-dir-entry  :override 'doom--neo-buffer--insert-dir-entry)
       ;; Shorter pwd in neotree
-      (advice-add 'neo-buffer--insert-root-entry :override 'doom--neo-buffer--insert-root-entry)
-      ;; Enable File icons
-      (set-default doom-neotree-file-icons t))
-    (map! :map neotree-mode-map
-          :m "\\\\" 'evil-window-prev
-          "ESC ESC" 'neotree-hide
-          "q"       'neotree-hide
-          [return]  'neotree-enter
-          "RET"     'neotree-enter
-          :m "J"    'neotree-select-next-sibling-node
-          :m "K"    'neotree-select-previous-sibling-node
-          :m "H"    'neotree-select-up-node
-          :m "L"    'neotree-select-down-node
-          "v"       'neotree-enter-vertical-split
-          "s"       'neotree-enter-horizontal-split
-          "c"       'neotree-create-node
-          "d"       'neotree-delete-node
-          "g"       'neotree-refresh
-          "r"       'neotree-rename-node
-          "R"       'neotree-change-root)))
-
-;; (defun spacemacs-doom-neotree/init-neotree ()
-;;   (eval-after-load "neotree"
-;;     (lambda ()
-;;       ;; Enable buffer-local hl-line and adjust line-spacing
-;;       (add-hook 'neo-after-create-hook 'doom--neotree-setup)
-;;       ;; Incompatible
-;;       (setq neo-vc-integration nil)
-;;       ;; Remove fringes in Neotree pane
-;;       (advice-add 'neo-global--select-window :after 'doom--neotree-no-fringes)
-;;       ;; Patch neotree to use `doom--neo-insert-fold-symbol'
-;;       (advice-add 'neo-buffer--insert-file-entry :override 'doom--neo-buffer--insert-file-entry)
-;;       (advice-add 'neo-buffer--insert-dir-entry  :override 'doom--neo-buffer--insert-dir-entry)
-;;       ;; Shorter pwd in neotree
-;;       (advice-add 'neo-buffer--insert-root-entry :override 'doom--neo-buffer--insert-root-entry)
-;;       ;; Enable File icons
-;;       (set-default doom-neotree-file-icons t))))
+      (advice-add 'neo-buffer--insert-root-entry :override 'doom--neo-buffer--insert-root-entry))
+    (evilified-state-evilify-map neotree-mode-map
+      :mode neotree-mode
+      :bindings
+      (kbd "TAB")  'neotree-stretch-toggle
+      (kbd "RET") 'neotree-enter
+      (kbd "|") 'neotree-enter-vertical-split
+      (kbd "-") 'neotree-enter-horizontal-split
+      (kbd "?") 'evil-search-backward
+      (kbd "c") 'neotree-create-node
+      (kbd "d") 'neotree-delete-node
+      (kbd "gr") 'neotree-refresh
+      (kbd "H") 'neotree-select-previous-sibling-node
+      (kbd "J") 'neotree-select-down-node
+      (kbd "K") 'neotree-select-up-node
+      (kbd "L") 'neotree-select-next-sibling-node
+      (kbd "q") 'neotree-hide
+      (kbd "r") 'neotree-rename-node
+      (kbd "R") 'neotree-change-root
+      (kbd "s") 'neotree-hidden-file-toggle)))
 
 ;;; packages.el ends here
