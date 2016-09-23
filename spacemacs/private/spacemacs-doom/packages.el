@@ -48,6 +48,7 @@
     evil-numbers
     evil-search-highlight-persist
     golden-ratio
+    helm ;; add post hook to further customize helm
     helm-ag
     helm-make
     helm-mode-manager
@@ -347,6 +348,23 @@
       (add-to-list 'golden-ratio-exclude-buffer-names " *which-key*")
 
       (spacemacs|diminish golden-ratio-mode " ⓖ" " g"))))
+
+(defun spacemacs-doom/post-init-helm ()
+  (progn
+    (setq helm-quick-update t
+          ;; Display extraineous helm UI elements
+          helm-display-header-line nil
+          ;; helm-ff-auto-update-initial-value nil
+          helm-find-files-doc-header nil);;; Popup setup
+
+    (defvar helm-global-prompt "››› ")
+
+    ;; ;; A simpler prompt: see `helm-global-prompt'
+    (advice-add 'helm :filter-args 'doom*helm-replace-prompt)
+    ;; Hide mode-line in helm windows
+    (advice-add 'helm-display-mode-line :override 'doom*helm-hide-header)
+    ))
+
 
 (defun spacemacs-doom/init-helm-ag ()
   (use-package helm-ag
