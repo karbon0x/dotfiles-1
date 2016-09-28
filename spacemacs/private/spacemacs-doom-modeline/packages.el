@@ -66,9 +66,15 @@
 (defun spacemacs-doom-modeline/init-f ()
   (use-package f))
 
-(defun spacemacs-doom-modeline/init-flycheck ()
-  (use-package flycheck
-    :demand t))
+(defun spacemacs-doom-modeline/pre-init-flycheck ()
+  (setq flycheck-indication-mode 'right-fringe
+        ;; Removed checks on idle/change for snappiness
+        flycheck-check-syntax-automatically '(save mode-enabled)
+        flycheck-highlighting-mode 'symbols
+        flycheck-disabled-checkers '(emacs-lisp emacs-lisp-checkdoc make)
+        ;; `flycheck-pos-tip'
+        flycheck-pos-tip-timeout 10
+        flycheck-display-errors-delay 0.5))
 
 (defun spacemacs-doom-modeline/init-s ()
   (use-package s
@@ -153,7 +159,6 @@
 
     (defvar doom-modeline-bar-inactive (face-background 'mode-line-inactive)
       "The color to use for the bar in inactive window mode-lines.")
-
 
     ;;
     ;; Functions
@@ -439,7 +444,7 @@
 
   (defun doom-mode-line (&optional id)
     `(:eval
-      (let* ((active (eq (selected-window) doom-ml-selected-window))
+      (let* ((active (or (eq (selected-window) doom-ml-selected-window)))
              (lhs (list (propertize
                          " " 'display (doom-make-xpm (if active
                                                          doom-modeline-bar-active
