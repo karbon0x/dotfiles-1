@@ -63,7 +63,7 @@ values."
      spacemacs-doom-neotree
 
      ;; General Language Layers
-     java-c-style
+     ;; java-c-style
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -273,6 +273,7 @@ in `dotspacemacs/user-config'."
   (define-macros)
 
   (setq-default
+    mode-line-default-help-echo nil ; don't say anything on mode-line mouseover
     indicate-buffer-boundaries nil ; don't show where buffer starts/ends
     indicate-empty-lines nil       ; don't show empty lines
     fringes-outside-margins t      ; switches order of fringe and margin
@@ -291,15 +292,8 @@ in `dotspacemacs/user-config'."
     visible-bell nil
     visible-cursor nil
     x-stretch-cursor t
-    ;; use-dialog-box nil             ; always avoid GUI
     redisplay-dont-pause t         ; don't pause display on input
-    ;; split-width-threshold nil      ; favor horizontal splits
     show-help-function nil         ; hide :help-echo text
-    jit-lock-defer-time nil
-    jit-lock-stealth-nice 0.1
-    jit-lock-stealth-time 0.2
-    jit-lock-stealth-verbose nil
-    ;; Minibuffer resizing
     resize-mini-windows 'grow-only
     max-mini-window-height 0.3
 
@@ -345,20 +339,6 @@ layers configuration. You are free to put any user code."
   (setq make-backup-files nil)
 
   (setq org-agenda-files (list "~/org/notes.org"))
-
-  ;; Custom Layouts
-  ;;
-  ;; Default project layout
-  ;; (spacemacs|define-custom-layout "Java Layout"
-  ;;   :binding "j"
-  ;;   :body
-  ;;   (neotree-find-project-root)
-  ;;   (find-file (concat (projectile-project-root) "pom.xml"))
-  ;;   (projectile-vc)
-  ;;   (split-window-below)
-  ;;   (evil-window-down 1)
-  ;;   (find-file (concat (projectile-project-root) "TODO.org"))
-  ;;   )
 
   (with-eval-after-load 'org
     ;; Set the org directory
