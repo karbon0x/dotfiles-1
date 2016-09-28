@@ -114,6 +114,9 @@
     (defvar doom-modeline-height 29
       "How tall the mode-line should be. This is only respected in GUI emacs.")
 
+    (defvar doom-modeline-bar-width 3
+      "How wide the mode-line bar should be. This is only respected in GUI emacs.")
+
     ;; Custom faces
     (defface doom-modeline-alternate '((t (:inherit mode-line)))
       "Secondary color for the modeline.")
@@ -145,14 +148,12 @@
     (defface doom-modeline-urgent  '((t (:inherit error)))
       "Face for errors in the modeline. Used by `*flycheck'")
 
+    (defvar doom-modeline-bar-active (face-background 'doom-modeline-bar)
+      "The color to use for the bar in active window mode-lines.")
 
-    ;;
-    ;; Dependencies
-    ;;
+    (defvar doom-modeline-bar-inactive (face-background 'mode-line-inactive)
+      "The color to use for the bar in inactive window mode-lines.")
 
-    ;; (require 'powerline)
-
-    ;; (require 'all-the-icons)
 
     ;;
     ;; Functions
@@ -188,9 +189,16 @@
     cached the first time."
       (add-hook 'focus-in-hook 'doom-ml|env-update)
       (add-hook 'find-file-hook 'doom-ml|env-update)
-      `(add-hook ',mode (lambda () (setq doom-ml--env-command ,command))))))
+      `(add-hook ',mode (lambda () (setq doom-ml--env-command ,command))))
 
+    (defun doom-make-xpm (color height width)
+      "Create an XPM bitmap."
+      (let ((data nil)
+            (i 0))
+        (setq data (make-list height (make-list width 1)))
+        (pl/make-xpm "percent" color color (reverse data))))
 
+    (pl/memoize 'doom-make-xpm)))
 
 (defun spacemacs-doom-modeline/post-init-powerline ()
   (defun *buffer-path ()
@@ -366,6 +374,7 @@
       'face 'doom-modeline-highlight)))
 
   (make-variable-buffer-local 'anzu--state)
+  ;; TODO: Figure out issue with active
   (defun *anzu ()
     "Show the current match number and the total number of matches. Requires anzu
   to be enabled."
@@ -431,11 +440,12 @@
   (defun doom-mode-line (&optional id)
     `(:eval
       (let* ((active (eq (selected-window) doom-ml-selected-window))
-            (lhs (list (propertize " "
-                                    'display
-                                    (pl/percent-xpm doom-modeline-height 100 0 100 0 3
-                                                    (face-background (if active 'doom-modeline-bar 'mode-line-inactive))
-                                                    nil))
+             (lhs (list (propertize
+                         " " 'display (doom-make-xpm (if active
+                                                         doom-modeline-bar-active
+                                                       doom-modeline-bar-inactive)
+                                                     doom-modeline-height
+                                                     doom-modeline-bar-width))
                         (*macro-recording)
                         (*selection-info)
                         (*anzu)
@@ -462,15 +472,15 @@
   ;; Eldoc-in-mode-line support (for `eval-expression')
   ;;
 
-  (defvar doom-eldoc-modeline-bar
-    (pl/percent-xpm doom-modeline-height 100 0 100 0 3
-                    (face-background 'doom-modeline-eldoc-bar)
-                    nil))
+  (defvar doom-eldoc-modeline-bar-color (face-background 'doom-modeline-eldoc-bar)
+    "The color to use for the bar when eldoc uses the mode-line.")
 
   (defun doom-eldoc-mode-line ()
     `(:eval
       (let ((active (eq (selected-window) doom-ml-selected-window)))
-        (list (list (propertize " " 'display doom-eldoc-modeline-bar)
+        (list (list (propertize " " 'display (doom-make-xpm doom-modeline-eldoc-bar-color
+                                                            doom-modeline-height
+                                                            doom-modeline-bar-width))
                     (and (bound-and-true-p str) str))
               (propertize " " 'display `((space :align-to (1- (+ right right-fringe right-margin)))))))))
 
