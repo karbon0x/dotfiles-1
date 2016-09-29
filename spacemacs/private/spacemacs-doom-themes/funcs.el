@@ -72,7 +72,6 @@
   :init-value nil
   :global nil
   (progn
-    (message "doom-hide-mode-line-mode = %s" doom-hide-mode-line-mode)
     (if doom-hide-mode-line-mode
         (setq doom--mode-line mode-line-format
               mode-line-format doom-hide-mode-line-format)
