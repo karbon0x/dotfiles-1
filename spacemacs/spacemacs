@@ -43,7 +43,6 @@ values."
            ruby-rest-runner `rspec
            ruby-version-manager 'rbenv)
      yaml
-     vimscript
 
      ;; Layers
      auto-completion
