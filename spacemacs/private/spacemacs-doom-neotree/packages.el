@@ -284,7 +284,8 @@
             neo-show-updir-line nil
             neo-auto-indent-point t
             neo-theme 'nerd ; fallback
-            neo-banner-message nil)
+            neo-banner-message nil
+            neo-show-hidden-files t)
       (defun neotree-find-project-root ()
         (interactive)
         (if (neo-global--window-exists-p)
