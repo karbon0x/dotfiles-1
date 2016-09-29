@@ -48,12 +48,16 @@
     (add-hook 'compilation-mode-hook 'doom-hide-mode-line-mode)
     (add-hook 'messages-buffer-mode-hook 'doom-hide-mode-line-mode)
     (with-current-buffer "*Messages*" (doom-hide-mode-line-mode +1))
-    (add-hook 'minimap-mode-hook 'doom-hide-mode-line-mode)))
+    (add-hook 'minimap-sb-mode-hook 'doom-hide-mode-line-mode)))
+
 
 (defun spacemacs-doom-themes/init-minimap ()
   (use-package minimap
     :config
-    (setq minimap-window-location 'right)
+    (setq minimap-window-location 'right
+          minimap-recenter-type 'middle
+          minimap-major-modes '(prog-mode neotree-mode)
+          minimap-hide-fringes t)
     (spacemacs|add-toggle minimap
       :status minimap-mode
       :on (minimap-mode)
