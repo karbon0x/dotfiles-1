@@ -56,7 +56,7 @@
     :config
     (setq minimap-window-location 'right
           minimap-recenter-type 'middle
-          minimap-major-modes '(prog-mode neotree-mode)
+          minimap-major-modes '(prog-mode enh-ruby-parent-mode)
           minimap-hide-fringes t)
     (spacemacs|add-toggle minimap
       :status minimap-mode
