@@ -68,8 +68,8 @@ values."
      java
      (ruby :variables
            ruby-enable-enh-ruby-mode t
-           ruby-rest-runner `rspec
-           ruby-version-manager 'rbenv)
+           ruby-rest-runner `chruby
+           ruby-version-manager 'chruby)
      yaml
      auto-completion
      spell-checking
