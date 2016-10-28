@@ -31,8 +31,7 @@
 
 (defconst spacemacs-doom-themes-packages
   '(
-    doom-themes
-    minimap))
+    doom-themes))
 
 (defun spacemacs-doom-themes/init-doom-themes ()
   (use-package doom-themes
@@ -47,22 +46,6 @@
     (add-hook 'help-mode-hook 'doom-hide-mode-line-mode)
     (add-hook 'compilation-mode-hook 'doom-hide-mode-line-mode)
     (add-hook 'messages-buffer-mode-hook 'doom-hide-mode-line-mode)
-    (with-current-buffer "*Messages*" (doom-hide-mode-line-mode +1))
-    (add-hook 'minimap-sb-mode-hook 'doom-hide-mode-line-mode)))
-
-
-(defun spacemacs-doom-themes/init-minimap ()
-  (use-package minimap
-    :config
-    (setq minimap-window-location 'right
-          minimap-recenter-type 'middle
-          minimap-major-modes '(prog-mode enh-ruby-parent-mode)
-          minimap-hide-fringes t)
-    (spacemacs|add-toggle minimap
-      :status minimap-mode
-      :on (minimap-mode)
-      :off (minimap-mode -1)
-      :documentation "Enable minimap window"
-      :evil-leader "tM")))
+    (with-current-buffer "*Messages*" (doom-hide-mode-line-mode +1))))
 
 ;;; doom.el ends here
