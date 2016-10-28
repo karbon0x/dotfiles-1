@@ -46,13 +46,13 @@ if [ -z "$EMACS_LAUNCH" ]; then
     # Setup jenv
     eval "$(jenv init -)"
 
-    Setup chefvm
+    # Setup chefvm
     eval "$(/Users/jf019013/.chefvm/bin/chefvm init -)"
 
-    Setup Docker
+    # Setup Docker
     eval "$(docker-machine env default)"
 
-    Set ruby 2 as the default ruby
+    # Set ruby 2 as the default ruby
     chruby 2.3.1
 
     # Path to the bash it configuration
