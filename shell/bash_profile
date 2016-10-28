@@ -2,87 +2,114 @@
 
 # bash_profile
 
-# set 256 color profile where possible
-if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-    export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-    export TERM=xterm-256color
+if [ -z "$EMACS_LAUNCH" ]; then
+    # set 256 color profile where possible
+    if [[ $COLORTERM == gnome-* && $TERM == xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+        export TERM=gnome-256color
+    elif infocmp xterm-256color >/dev/null 2>&1; then
+        export TERM=xterm-256color
+    fi
+
+    # Up-front dotfiles configuration
+    # Not part of `load_dotfiles` because it must be sourced before anything else
+    # to be sure that commands like `brew` (when installed in a custom location)
+    # are already added to the PATH.
+    [ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
+
+    load_dotfiles() {
+        declare -a files=(
+            /usr/local/share/chruby/chruby.sh
+            /usr/local/share/chruby/auto.sh
+            $HOME/.dotfiles/shell/bash_options # Options
+            $HOME/.dotfiles/shell/bash_exports # Exports
+            $HOME/.dotfiles/shell/bash_aliases # Aliases
+            $HOME/.dotfiles/shell/functions/* # Functions
+            $HOME/.dotfiles/shell/bash_paths # Path modifications
+            $HOME/.bash_it/bash_it.sh
+            $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
+            $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
+            $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
+        )
+
+        # if these files are readable, source them
+        for index in ${!files[*]}
+        do
+        if [[ -r ${files[$index]} ]]; then
+            source ${files[$index]}
+        fi
+        done
+    }
+
+    load_dotfiles
+    unset load_dotfiles
+
+    # Setup jenv
+    eval "$(jenv init -)"
+
+    Setup chefvm
+    eval "$(/Users/jf019013/.chefvm/bin/chefvm init -)"
+
+    Setup Docker
+    eval "$(docker-machine env default)"
+
+    Set ruby 2 as the default ruby
+    chruby 2.3.1
+
+    # Path to the bash it configuration
+    export BASH_IT="/Users/jf019013/.bash_it"
+
+    # Lock and Load a custom theme file
+    # location /.bash_it/themes/
+    export BASH_IT_THEME='bobby'
+
+    # (Advanced): Change this to the name of your remote repo if you
+    # cloned bash-it with a remote other than origin such as `bash-it`.
+    # export BASH_IT_REMOTE='bash-it'
+
+    # Your place for hosting Git repos. I use this for private repos.
+    export GIT_HOSTING='git@git.domain.com'
+
+    # Don't check mail when opening terminal.
+    unset MAILCHECK
+
+    # Change this to your console based IRC client of choice.
+    export IRC_CLIENT='irssi'
+
+    # Set this to the command you use for todo.txt-cli
+    export TODO="t"
+
+    # Set this to false to turn off version control status checking within the prompt for all themes
+    export SCM_CHECK=true
+
+    # Set vcprompt executable path for scm advance info in prompt (demula theme)
+    # https://github.com/xvzf/vcprompt
+    #export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
+
+    # Load Bash It
+
+    source $BASH_IT/bash_it.sh
+else
+    load_dotfiles() {
+        declare -a files=(
+            /usr/local/share/chruby/chruby.sh
+            /usr/local/share/chruby/auto.sh
+            $HOME/.dotfiles/shell/bash_options # Options
+            $HOME/.dotfiles/shell/bash_exports # Exports
+            $HOME/.dotfiles/shell/bash_aliases # Aliases
+            $HOME/.dotfiles/shell/functions/* # Functions
+            $HOME/.dotfiles/shell/bash_paths # Path modifications
+            $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
+        )
+
+        # if these files are readable, source them
+        for index in ${!files[*]}
+        do
+            if [[ -r ${files[$index]} ]]; then
+                source ${files[$index]}
+            fi
+        done
+    }
+
+    load_dotfiles
+    unset load_dotfiles
 fi
-
-# Up-front dotfiles configuration
-# Not part of `load_dotfiles` because it must be sourced before anything else
-# to be sure that commands like `brew` (when installed in a custom location)
-# are already added to the PATH.
-[ -r $HOME/.dotfilesrc ] && source $HOME/.dotfilesrc;
-
-load_dotfiles() {
-    declare -a files=(
-        /usr/local/share/chruby/chruby.sh
-        /usr/local/share/chruby/auto.sh
-        $HOME/.dotfiles/shell/bash_options # Options
-        $HOME/.dotfiles/shell/bash_exports # Exports
-        $HOME/.dotfiles/shell/bash_aliases # Aliases
-        $HOME/.dotfiles/shell/functions/* # Functions
-        $HOME/.dotfiles/shell/bash_paths # Path modifications
-        $HOME/.bash_it/bash_it.sh
-        $HOME/.dotfiles/shell/bash_prompt # Custom bash prompt
-        $(brew --prefix)/etc/bash_completion # Bash completion (installed via Homebrew)
-        $HOME/.bash_profile.local # Local and private settings not under version control (e.g. git credentials)
-    )
-
-    # if these files are readable, source them
-    for index in ${!files[*]}
-    do
-      if [[ -r ${files[$index]} ]]; then
-        source ${files[$index]}
-      fi
-    done
-}
-
-load_dotfiles
-unset load_dotfiles
-
-# Setup jenv
-eval "$(jenv init -)"
-
-# Setup chefvm
-eval "$(/Users/jf019013/.chefvm/bin/chefvm init -)"
-
-# Setup Docker
-eval $(docker-machine env default)
-
-# Set ruby 2 as the default ruby
-chruby 2
-
-# Path to the bash it configuration
-export BASH_IT="/Users/jf019013/.bash_it"
-
-# Lock and Load a custom theme file
-# location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
-
-# (Advanced): Change this to the name of your remote repo if you
-# cloned bash-it with a remote other than origin such as `bash-it`.
-# export BASH_IT_REMOTE='bash-it'
-
-# Your place for hosting Git repos. I use this for private repos.
-export GIT_HOSTING='git@git.domain.com'
-
-# Don't check mail when opening terminal.
-unset MAILCHECK
-
-# Change this to your console based IRC client of choice.
-export IRC_CLIENT='irssi'
-
-# Set this to the command you use for todo.txt-cli
-export TODO="t"
-
-# Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=true
-
-# Set vcprompt executable path for scm advance info in prompt (demula theme)
-# https://github.com/xvzf/vcprompt
-#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
-
-# Load Bash It
-source $BASH_IT/bash_it.sh
