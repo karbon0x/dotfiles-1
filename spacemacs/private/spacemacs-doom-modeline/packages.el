@@ -473,7 +473,7 @@
                                       doom-modeline-bar-width)
                         ,(unless (eq id 'scratch)
                           '(if (and (= (length meta) 0)
-                                    (not doom-ediff-enabled))
+                                    (not t)) ;; doom-ediff-enabled replaced with t
                                 " %I "
                               meta))
                         " "
@@ -541,5 +541,6 @@
                   (throw 'break nil)))
             (force-mode-line-update)
             (sit-for eldoc-show-in-mode-line-delay))))
+      (helm-split-window-default-fn)
       (force-mode-line-update))))
 ;;; packages.el ends here

@@ -55,7 +55,9 @@ values."
      osx
 
      ;; Modes
-     org
+     (org :variables
+          org-projectile-file "/Users/jf019013/org/TODOs.org"
+          org-enable-github-support t)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -385,7 +387,8 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
   ;; Initialize UI
-  (defconst doom-fringe-size '5 "Default fringe width")
+  (disable-theme 'spacemacs-dark) ;; Disable spacemacs theme to get full doom theme
+  (defconst doom-fringe-size '3 "Default fringe width")
   (tooltip-mode -1) ; show tooltips in echo area
   (if (not window-system)
       (menu-bar-mode -1)
@@ -417,8 +420,6 @@ layers configuration. You are free to put any user code."
   (setq whitespace-style '(face empty tabs lines-tail trailing))
   ;; Turn on backup files
   (setq make-backup-files nil)
-
-  (setq org-agenda-files (list "~/org/notes.org"))
 
   (with-eval-after-load 'org
     ;; Set the org directory
