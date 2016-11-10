@@ -473,7 +473,7 @@
                                       doom-modeline-bar-width)
                         ,(unless (eq id 'scratch)
                           '(if (and (= (length meta) 0)
-                                    (not t)) ;; doom-ediff-enabled replaced with t
+                                    (not doom-ediff-enabled))
                                 " %I "
                               meta))
                         " "

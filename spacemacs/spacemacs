@@ -348,6 +348,11 @@ in `dotspacemacs/user-config'."
   ;; Define custom macros
   (define-macros)
 
+  ;; Track ediff state
+  (defvar doom-ediff-enabled nil)
+  (add-hook! ediff-startup (setq doom-ediff-enabled t))
+  (add-hook! ediff-quit    (setq doom-ediff-enabled nil))
+
   (setq-default
     exec-path-from-shell-arguments () ; Don't load shell interactively to force loading of .bashrc
     mode-line-default-help-echo nil ; don't say anything on mode-line mouseover
@@ -408,11 +413,6 @@ layers configuration. You are free to put any user code."
     (set-fringe-bitmap-face 'tilde 'fringe)
     ;; (setcdr (assq 'empty-line fringe-indicator-alist) 'tilde)
     )
-
-  ;; Track ediff state
-  (defvar doom-ediff-enabled nil)
-  (add-hook! ediff-startup (setq doom-ediff-enabled t))
-  (add-hook! ediff-quit    (setq doom-ediff-enabled nil))
 
   ;; add newline at end of file
   (setq require-final-newline 'visit-save)
