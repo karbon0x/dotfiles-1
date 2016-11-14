@@ -387,7 +387,7 @@ in `dotspacemacs/user-config'."
 
     ;; Helm config
     helm-display-buffer-default-height 15
-    ))
+    helm-display-header-line nil))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
