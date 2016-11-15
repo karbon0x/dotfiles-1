@@ -80,6 +80,7 @@
   (use-package s
     :defer t))
 
+
 (defun spacemacs-doom-modeline/init-powerline ()
   (use-package powerline
     :demand t
@@ -458,6 +459,9 @@
           (let ((size (image-size (image-get-display-property) :pixels)))
             (format "  %dx%d  " (car size) (cdr size))))))
 
+  (defun *helm-info ()
+    (helm-show-candidate-number))
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun doom-modeline (&optional id)
@@ -481,6 +485,9 @@
                                 '(*buffer-project))
                               ((eq id 'media)
                                 '(*media-info))
+                              ((eq id 'helm)
+                               '(*helm-info)
+                               )
                               (t
                                 '(list (*buffer-info)
                                       "  %l:%c %p  "
@@ -503,10 +510,18 @@
   (add-hook! image-mode
     (setq mode-line-format (doom-modeline 'media)))
 
+  ;;
+  ;; Helm Modeline
+  ;;
 
-  ;;
-  ;; Eldoc-in-mode-line support (for `eval-expression')
-  ;;
+  (fset 'helm-display-mode-line #'ignore)
+  (defun set-helm-modeline ()
+    (with-helm-buffer
+      (set-face-attribute 'helm-candidate-number nil
+                          :background "#282c34"
+                          :foreground "#51afef")
+      (setq-local mode-line-format (doom-modeline 'helm))))
+  (add-hook 'helm-after-initialize-hook #'set-helm-modeline)
 
   (defun doom-eldoc-modeline ()
     `(:eval
